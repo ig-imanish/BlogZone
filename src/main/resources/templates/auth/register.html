@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/auth.css" /> -->
+        <link rel="stylesheet" th:href="@{/css/auth.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>Registration Page</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="head">
+        <h1>Registration Form</h1>
+      </div>
+      <div class="register-form">
+        <form
+          method="post"
+          th:action="@{/auth/register/save}"
+          th:object="${user}"
+        >
+          <div class="form-group mb-3">
+            <label class="form-label">Full Name</label>
+            <input
+              class="form-control"
+              id="fullName"
+              name="fullName"
+              placeholder="Enter full name"
+              th:field="*{fullName}"
+              type="text"
+            />
+            <p
+              th:if="${#fields.hasErrors('fullName')}"
+              th:errors="*{fullName}"
+              class="text-danger"
+            ></p>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Username</label>
+            <input
+              class="form-control"
+              id="username"
+              name="username"
+              placeholder="Enter username"
+              th:field="*{username}"
+              type="text"
+            />
+            <p
+              th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}"
+              class="text-danger"
+            ></p>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Email</label>
+            <input
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Enter email address"
+              th:field="*{email}"
+              type="email"
+            />
+            <p
+              th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}"
+              class="text-danger"
+            ></p>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Password</label>
+            <input
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              th:field="*{password}"
+              type="password"
+            />
+            <p
+              th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}"
+              class="text-danger"
+            ></p>
+          </div>
+
+          <div class="form-group">
+            <button class="submit-btn" type="submit">Register</button>
+          </div>
+        </form>
+        <p>Already have an account?  <a th:href="@{/auth/login}">Login here</a></p>
+        <div class="error" th:if="${param.success}">
+          <div class="alert alert-success">
+            You have successfully registered!<i class="fa-regular fa-circle-check"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
