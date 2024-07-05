@@ -1,6 +1,7 @@
 package com.blogzone.security;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,18 +21,25 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Find user by username or email
-        User user = userRepository.findByEmailOrUsername(username, username);
+    @Override
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    // Find user by username or email
+    List<User> users = userRepository.findByEmailOrUsername(username, username);
 
-        if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority("USER")));
+    if (users.isEmpty()) {
+        throw new UsernameNotFoundException("Invalid username or password.");
+    } else if (users.size() > 1) {
+        // Handle multiple users found (log an error, throw an exception, or choose one)
+        throw new RuntimeException("Multiple users found for username: " + username);
     }
+
+    User user = users.get(0);
+
+    // Build UserDetails object
+    return new org.springframework.security.core.userdetails.User(
+            user.getUsername(),
+            user.getPassword(),
+            Collections.singleton(new SimpleGrantedAuthority("USER")));
+}
+
 }

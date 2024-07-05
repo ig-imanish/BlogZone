@@ -18,6 +18,9 @@ public class User {
     private transient String userAvatarBase64;
     private Binary userBanner;
     private transient String userBannerBase64;
+    private String country;
+    private String bio;
+    private String url;
     private List<String> totalBlogIds;
     private List<String> savedBlogIds;
     private List<String> followingIds;
@@ -29,11 +32,11 @@ public class User {
     
     public User() {
     }
-
     public User(String id, String fullName, String username, String email, String password, Binary userAvatar,
-            String userAvatarBase64, Binary userBanner, String userBannerBase64, List<String> totalBlogIds,
-            List<String> savedBlogIds, List<String> followingIds, List<String> followersIds, List<String> likedBlogsIds,
-            List<String> dislikedBlogIds, List<String> likedCommentsIds, List<String> dislikedCommentIds) {
+            String userAvatarBase64, Binary userBanner, String userBannerBase64, String country, String bio, String url,
+            List<String> totalBlogIds, List<String> savedBlogIds, List<String> followingIds, List<String> followersIds,
+            List<String> likedBlogsIds, List<String> dislikedBlogIds, List<String> likedCommentsIds,
+            List<String> dislikedCommentIds) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
@@ -43,6 +46,9 @@ public class User {
         this.userAvatarBase64 = userAvatarBase64;
         this.userBanner = userBanner;
         this.userBannerBase64 = userBannerBase64;
+        this.country = country;
+        this.bio = bio;
+        this.url = url;
         this.totalBlogIds = totalBlogIds;
         this.savedBlogIds = savedBlogIds;
         this.followingIds = followingIds;
@@ -52,9 +58,29 @@ public class User {
         this.likedCommentsIds = likedCommentsIds;
         this.dislikedCommentIds = dislikedCommentIds;
     }
+    public String getCountry() {
+        return country;
+    }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-    
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public Binary getUserAvatar() {
         return userAvatar;
@@ -191,16 +217,13 @@ public class User {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
     @Override
     public String toString() {
         return "User [id=" + id + ", fullName=" + fullName + ", username=" + username + ", email=" + email
-                + ", password=" + password + ", userAvatar=" + userAvatar + ", userBanner=" + userBanner
-                + ", totalBlogIds=" + totalBlogIds + ", savedBlogIds=" + savedBlogIds + ", followingIds=" + followingIds
-                + ", followersIds=" + followersIds + ", likedBlogsIds=" + likedBlogsIds + ", dislikedBlogIds="
-                + dislikedBlogIds + ", likedCommentsIds=" + likedCommentsIds + ", dislikedCommentIds="
-                + dislikedCommentIds + "]";
+                + ", password=" + password + ", userAvatar=" + userAvatar + ", userBanner=" + userBanner + ", country="
+                + country + ", bio=" + bio + ", url=" + url + ", totalBlogIds=" + totalBlogIds + ", savedBlogIds="
+                + savedBlogIds + ", followingIds=" + followingIds + ", followersIds=" + followersIds
+                + ", likedBlogsIds=" + likedBlogsIds + ", dislikedBlogIds=" + dislikedBlogIds + ", likedCommentsIds="
+                + likedCommentsIds + ", dislikedCommentIds=" + dislikedCommentIds + "]";
     }
-
-   
 }

@@ -16,7 +16,6 @@ public class BlogService {
     @Autowired
      private BlogRepository  blogRepository;
     
-
     public void saveBlog(Blog blog) {
         CodeGenerator codeGenerator = new CodeGenerator();
         blog.setId(codeGenerator.generateBlogId());
@@ -44,5 +43,9 @@ public class BlogService {
         blogRepository.findAll().iterator().forEachRemaining(blogs::add);
         return blogs;
     }
+    public List<Blog> findByUsername(String name){
+        return blogRepository.findByAuthorId(name);
+    }
+
 
 }

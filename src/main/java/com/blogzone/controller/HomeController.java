@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import com.blogzone.entity.Blog;
 import com.blogzone.entity.User;
 import com.blogzone.service.BlogService;
 import com.blogzone.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {

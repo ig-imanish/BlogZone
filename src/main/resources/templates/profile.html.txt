@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,61 +11,58 @@
     <link rel="stylesheet" th:href="@{/css/global.css}" />
   </head>
   <body>
-    <div class="container" th:if="${user != null}">
+    <div class="container" > 
+      <!-- th:if="${user}" -->
       <div class="profile-section">
         <div class="header">
           <img
             th:if="${user.userBanner != null}"
-            th:src="'data:image/jpeg;base64,' + ${user.userBannerBase64}"
+            th:src="'data:image/jpeg;base64,' + ${user.userBanner}"
             alt="Banner"
           />
           <img
             th:unless="${user.userBanner != null}"
-            th:src="@{/img/banner.jpg}"
+            th:src="@{/icons/banner.jpg}"
             alt="Banner"
           />
         </div>
         <div class="profile-image">
           <img
             th:if="${user.userAvatar != null}"
-            th:src="'data:image/jpeg;base64,' + ${user.userAvatarBase64}"
+            th:src="'data:image/jpeg;base64,' + ${user.userAvatar}"
             alt="Profile Image"
           />
           <img
             th:unless="${user.userAvatar != null}"
-            th:src="@{/img/profile.jpg}"
+            th:src="@{/icons/profile.jpg}"
             alt="Profile Image"
           />
         </div>
         <div class="info">
           <div class="info_main">
             <div class="info_head">
-              <h2 th:if="${user.fullName}" th:text="${user.fullName}">
-                Full Name
-              </h2>
-              <p th:if="${user.username}" th:text="${user.username}">
-                @username
-              </p>
+              <h2 th:text="${user.fullName}">Full Name</h2>
+              <p th:text="${user.username}">@username</p>
             </div>
             <div class="top-btns">
               <a href="#" class="follow-btn">Following</a>
               <a href="#" class="message-btn">Message</a>
-              <a href="/profile/edit" class="setting-btn"
+              <a href="setting.html" class="setting-btn"
                 ><i class="fa-solid fa-gear"></i
               ></a>
             </div>
           </div>
-          <p th:if="${user.bio}" th:text="${user.bio}">User Bio</p>
+          <p th:text="${user.bio}">User Bio</p>
         </div>
         <div class="footer">
           <div class="icons">
-            <div class="icon-text" th:if="${user.url}">
+            <div class="icon-text">
               <i class="fa-solid fa-link"></i>
-              <a th:href="${user.url}">
-                <span th:text="${user.url}">URL</span>
-              </a>
+              <a th:href="${user.url}"
+                ><span th:text="${user.url}">URL</span></a
+              >
             </div>
-            <div class="icon-text" th:if="${user.country}">
+            <div class="icon-text">
               <i class="fa-solid fa-location-dot"></i>
               <p th:text="${user.country}">Country</p>
             </div>
@@ -73,7 +70,7 @@
         </div>
         <div class="stats">
           <div>
-            <h3 th:text="${totalBlogs != null ? totalBlogs : '0'}">0</h3>
+            <h3 th:text="${totalBlogs}">0</h3>
             <p>Blogs</p>
           </div>
           <div>
@@ -144,7 +141,7 @@
           <a href="/blogs/saved"><i class="fa-regular fa-bookmark"></i></a>
         </button>
         <button class="nav-item" th:if="${user != null}">
-          <a th:href="@{/profile/{username}(username=${currUsername})}"
+          <a th:href="@{/{username}(username=${currUsername})}"
             ><i class="fa-regular fa-user"></i
           ></a>
         </button>
