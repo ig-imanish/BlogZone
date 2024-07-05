@@ -17,11 +17,11 @@
     <div class="container">
       <div class="head">
         <h2>
-          Good morning,
+          Hey,
           <span th:if="${user != null}" th:text="${user.fullName} ?: 'Guest!'"
             >User Full Name</span
           >
-          <span th:if="${user == null}">Guest.</span>
+          <span th:if="${user == null}">Guest</span>
         </h2>
         <div class="bell-icon"><i class="fa-regular fa-bell"></i></div>
       </div>
@@ -54,11 +54,11 @@
           <div class="article-content">
             <span class="source" th:text="${blog.authorId}"></span>
             <h3 class="title">
-              <a href="#" th:text="${blog.title}"></a>
+              <a th:href="@{'/blogs/' + ${blog.id}}" th:text="${blog.title}"></a>
             </h3>
             <span
               class="date"
-              th:text="${#dates.format(blog.date, 'yyyy-MM-dd')}"
+              th:text="${blog.dateString}"
             ></span>
             <button class="toggle-actions">
               <i class="fa-solid fa-ellipsis-vertical"></i>

@@ -12,13 +12,38 @@
     <link rel="stylesheet" th:href="@{/css/global.css}" />
   </head>
   <body>
-    <div class="container">
+    <div class="container" th:if="${user != null}">
       <div class="profile-section">
         <div class="header">
-          <img src="/icons/banner.jpg" alt="Banner" />
+          <!-- <img src="/icons/banner.jpg" alt="Banner" /> -->
+
+           <img
+            th:if="${blog.imageBase64}"
+            th:src="'data:image/jpeg;base64,' + ${user.imageBase64}"
+            alt="Image"
+          />
+          <img
+            th:unless="${blog.imageBase64}"
+            th:src="@{icons/background.jpg}"
+            alt="Image"
+          />
+
         </div>
         <div class="profile-image">
-          <img src="icons/profile.jpg" alt="Profile Image" />
+          <!-- <img src="icons/profile.jpg" alt="Profile Image" /> -->
+
+          <img
+            th:if="${blog.imageBase64}"
+            th:src="'data:image/jpeg;base64,' + ${user.imageBase64}"
+            alt="Image"
+          />
+          <img
+            th:unless="${blog.imageBase64}"
+            th:src="@{icons/background.jpg}"
+            alt="Image"
+          />
+
+
         </div>
         <div class="info">
           <div class="info_main">

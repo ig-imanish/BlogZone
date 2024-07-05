@@ -49,10 +49,24 @@ body {
 .form-group input {
   width: 100%;
   padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border-radius: 5px !important;
+  background-color: var(--bg-color);
   outline: none;
+  border: 2px solid var(--bg-color-article);
   box-sizing: border-box;
+  color: var(--text-color-light);
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px !important;
+  background-color: var(--bg-color);
+  outline: none;
+  border: 2px solid var(--bg-color-article);
+  box-sizing: border-box;
+  color: var(--text-color-light);
 }
 
 .form-group input:focus {
@@ -123,4 +137,22 @@ p a:hover {
 .alert-success i {
   margin-left: 10px;
   color: rgb(14, 197, 7);
+}
+
+.field-group {
+  display: none;
+  margin-bottom: 10px;
+  border: 2px solid var(--bg-color-article);
+  padding: 10px;
+}
+
+.field-group.visible {
+  display: block;
+}
+
+.custom-file-button input[type="file"]::file-selector-button {
+  display: none;
+}
+::placeholder {
+  color: var(--text-color-light);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +20,6 @@ public class Blog {
     private String content;
     @NotBlank(message = "Author is required")
     private String authorId;
-    private Date date;
     private String dateString;
     private List<String> categories;
     private Binary productImage;
@@ -32,15 +32,16 @@ public class Blog {
     public Blog() {
         
     }
-    
-    public Blog(String id, String title, String content, String authorId, Date date, String dateString,
+
+    public Blog(String id, @NotBlank(message = "Title is required") String title,
+            @NotBlank(message = "Content is required") String content,
+            @NotBlank(message = "Author is required") String authorId, String dateString,
             List<String> categories, Binary productImage, String imageBase64, List<Comment> comments, int likes,
             int dislikes, int views) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.authorId = authorId;
-        this.date = date;
         this.dateString = dateString;
         this.categories = categories;
         this.productImage = productImage;
@@ -54,74 +55,33 @@ public class Blog {
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getContent() {
         return content;
     }
+
     public void setContent(String content) {
         this.content = content;
     }
+
     public String getAuthorId() {
         return authorId;
     }
+
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
-    }
-    public Date getDate() {
-        return date;
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    public List<String> getCategories() {
-        return categories;
-    }
-    public void setCategories(List<String> categories) {
-        this.categories = categories;
-    }
-    public Binary getProductImage() {
-        return productImage;
-    }
-    public void setProductImage(Binary productImage) {
-        this.productImage = productImage;
-    }
-    public String getImageBase64() {
-        return imageBase64;
-    }
-    public void setImageBase64(String imageBase64) {
-        this.imageBase64 = imageBase64;
-    }
-    public List<Comment> getComments() {
-        return comments;
-    }
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-    public int getLikes() {
-        return likes;
-    }
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-    public int getDislikes() {
-        return dislikes;
-    }
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
-    }
-    public int getViews() {
-        return views;
-    }
-    public void setViews(int views) {
-        this.views = views;
     }
 
     public String getDateString() {
@@ -132,10 +92,65 @@ public class Blog {
         this.dateString = dateString;
     }
 
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public Binary getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(Binary productImage) {
+        this.productImage = productImage;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
     @Override
     public String toString() {
-        return "Blog [id=" + id + ", title=" + title + ", content=" + content + ", authorId=" + authorId + ", date="
-                + date + ", dateString=" + dateString + ", categories=" + categories + ", productImage=" + productImage
+        return "Blog [id=" + id + ", title=" + title + ", content=" + content + ", authorId=" + authorId + ", dateString=" + dateString + ", categories=" + categories + ", productImage=" + productImage
                 + ", comments=" + comments + ", likes=" + likes + ", dislikes=" + dislikes + ", views=" + views + "]";
     }
     

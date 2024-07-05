@@ -72,27 +72,4 @@ public class HomeController {
     // model.addAttribute("error", "user havent logined yet");
     // return "profile";
     // }
-
-    @GetMapping("/{username}")
-    public String profileById(@PathVariable String username, HttpServletRequest request, Model model,
-            Principal principal) {
-
-        if (!username.contains("@")) {
-            return "redirect:/home";
-        }
-        User user = userService.findByUsername(username);
-        if (user == null) {
-            model.addAttribute("error", "user not found");
-            return "profile";
-        }
-        if (principal != null) {
-            String currentUsername = principal.getName();
-            if (currentUsername.equals(username)) {
-                model.addAttribute("current", true);
-                return "profile";
-            }
-            model.addAttribute("user", user);
-        }
-        return "profile";
-    }
 }

@@ -3,8 +3,8 @@ package com.blogzone.helpers;
 import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.blogzone.service.BlogService;
 import com.blogzone.service.UserService;
@@ -24,7 +24,6 @@ public class CodeGenerator {
         this.blogService = blogService;
     }
 
-    // Default constructor for cases where constructor injection isn't used
     public CodeGenerator() {
         this.userService = null;
         this.blogService = null;

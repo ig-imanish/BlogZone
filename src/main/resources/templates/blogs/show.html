@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+
+    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/blog.css}" />
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/blog.css" /> -->
+    <title>Blog Page</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="register-form">
+           <zero-md th:src="@{'/md-files/' + ${blog.id} + '.md'}">
+                <template>
+                    <style>
+                        :host {
+                            display: block;
+                            position: relative;
+                            contain: content;
+                        }
+                        
+                        :host([hidden]) {
+                            display: none;
+                        }
+                    </style>
+                     <link rel="stylesheet" th:href="@{/css/blog.css}" />
+                    <link rel="stylesheet"
+                        href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css" />
+            </zero-md>
+        </div>
+    </div>
+</body>
+
+</html>

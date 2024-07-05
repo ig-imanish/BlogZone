@@ -14,8 +14,10 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private Binary productImage;
-    private transient String imageBase64;
+    private Binary userAvatar;
+    private transient String userAvatarBase64;
+    private Binary userBanner;
+    private transient String userBannerBase64;
     private List<String> totalBlogIds;
     private List<String> savedBlogIds;
     private List<String> followingIds;
@@ -28,19 +30,19 @@ public class User {
     public User() {
     }
 
-    
-
-    public User(String id, String fullName, String username, String email, String password, Binary productImage,
-            String imageBase64, List<String> totalBlogIds, List<String> savedBlogIds, List<String> followingIds,
-            List<String> followersIds, List<String> likedBlogsIds, List<String> dislikedBlogIds,
-            List<String> likedCommentsIds, List<String> dislikedCommentIds) {
+    public User(String id, String fullName, String username, String email, String password, Binary userAvatar,
+            String userAvatarBase64, Binary userBanner, String userBannerBase64, List<String> totalBlogIds,
+            List<String> savedBlogIds, List<String> followingIds, List<String> followersIds, List<String> likedBlogsIds,
+            List<String> dislikedBlogIds, List<String> likedCommentsIds, List<String> dislikedCommentIds) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.productImage = productImage;
-        this.imageBase64 = imageBase64;
+        this.userAvatar = userAvatar;
+        this.userAvatarBase64 = userAvatarBase64;
+        this.userBanner = userBanner;
+        this.userBannerBase64 = userBannerBase64;
         this.totalBlogIds = totalBlogIds;
         this.savedBlogIds = savedBlogIds;
         this.followingIds = followingIds;
@@ -52,6 +54,39 @@ public class User {
     }
 
 
+    
+
+    public Binary getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(Binary userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public String getUserAvatarBase64() {
+        return userAvatarBase64;
+    }
+
+    public void setUserAvatarBase64(String userAvatarBase64) {
+        this.userAvatarBase64 = userAvatarBase64;
+    }
+
+    public Binary getUserBanner() {
+        return userBanner;
+    }
+
+    public void setUserBanner(Binary userBanner) {
+        this.userBanner = userBanner;
+    }
+
+    public String getUserBannerBase64() {
+        return userBannerBase64;
+    }
+
+    public void setUserBannerBase64(String userBannerBase64) {
+        this.userBannerBase64 = userBannerBase64;
+    }
 
     public String getId() {
         return id;
@@ -157,39 +192,14 @@ public class User {
         this.fullName = fullName;
     }
 
-
-
-    public Binary getProductImage() {
-        return productImage;
-    }
-
-
-
-    public void setProductImage(Binary productImage) {
-        this.productImage = productImage;
-    }
-
-
-
-    public String getImageBase64() {
-        return imageBase64;
-    }
-
-
-
-    public void setImageBase64(String imageBase64) {
-        this.imageBase64 = imageBase64;
-    }
-
-
-
     @Override
     public String toString() {
         return "User [id=" + id + ", fullName=" + fullName + ", username=" + username + ", email=" + email
-                + ", password=" + password + ", productImage=" + productImage + ", totalBlogIds=" + totalBlogIds
-                + ", savedBlogIds=" + savedBlogIds + ", followingIds=" + followingIds + ", followersIds=" + followersIds
-                + ", likedBlogsIds=" + likedBlogsIds + ", dislikedBlogIds=" + dislikedBlogIds + ", likedCommentsIds="
-                + likedCommentsIds + ", dislikedCommentIds=" + dislikedCommentIds + "]";
+                + ", password=" + password + ", userAvatar=" + userAvatar + ", userBanner=" + userBanner
+                + ", totalBlogIds=" + totalBlogIds + ", savedBlogIds=" + savedBlogIds + ", followingIds=" + followingIds
+                + ", followersIds=" + followersIds + ", likedBlogsIds=" + likedBlogsIds + ", dislikedBlogIds="
+                + dislikedBlogIds + ", likedCommentsIds=" + likedCommentsIds + ", dislikedCommentIds="
+                + dislikedCommentIds + "]";
     }
 
    

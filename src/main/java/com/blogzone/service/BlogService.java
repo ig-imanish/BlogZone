@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.blogzone.entity.Blog;
 import com.blogzone.helpers.CodeGenerator;
+import com.blogzone.helpers.MarkdownFileWriter;
 import com.blogzone.repository.BlogRepository;
 
 @Service
@@ -19,6 +20,7 @@ public class BlogService {
     public void saveBlog(Blog blog) {
         CodeGenerator codeGenerator = new CodeGenerator();
         blog.setId(codeGenerator.generateBlogId());
+        MarkdownFileWriter.saveMarkdownFile( blog.getId() + ".md", blog.getContent());
         blogRepository.save(blog);
     }
 
