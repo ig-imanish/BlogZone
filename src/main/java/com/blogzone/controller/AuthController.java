@@ -33,6 +33,7 @@ public class AuthController {
 
     @GetMapping("/")
     public String index(Principal principal) {
+        
         if (principal != null) {
             System.out.println(principal.getName());
             return "redirect:/home";

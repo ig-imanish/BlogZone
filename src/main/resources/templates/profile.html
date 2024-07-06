@@ -9,8 +9,35 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
     <link rel="stylesheet" th:href="@{/css/global.css}" />
-
     <link rel="stylesheet" href="/src/main/resources/static/css/global.css" />
+
+    <style>
+      .message-card {
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+
+      .message-card.success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .message-card.error {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+      .cancel-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <!-- Loading overlay -->
@@ -182,19 +209,29 @@
           </div>
         </article>
         <!-- Check if there is a success message -->
-        <div th:if="${message}">
-          <p th:text="${message}" class="success-message"></p>
+        <div
+          class="message-card success"
+          th:if="${message}"
+          
+        >
+        <span th:text="${message}"></span>
+          <button class="close-actions">
+            <i class="fa-solid fa-times"></i>
+          </button>
         </div>
-
-        <!-- Check if there is an error message -->
-        <div th:if="${error}">
-          <p th:text="${error}" class="error-message"></p>
+        <div class="message-card error" th:if="${error}">
+          <span th:text="${message}"></span>
+          <button class="close-actions">
+            <i class="fa-solid fa-times"></i>
+          </button>
         </div>
       </div>
     </div>
     <div class="container" th:if="${error}">
       <div class="header">
-        <h2 th:text="${error}">User Not Found!</h2>
+        <h2 style="color: rgb(172, 31, 31)" th:text="${error}">
+          User Not Found!
+        </h2>
       </div>
     </div>
     <div class="bottom-nav-container">
@@ -222,6 +259,16 @@
     </div>
     <script>
       // JavaScript for article actions toggle
+      document.addEventListener("DOMContentLoaded", function () {
+        const closeButtons = document.querySelectorAll(".close-actions");
+
+        closeButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            button.parentElement.style.display = "none";
+          });
+        });
+      });
+
       document.addEventListener("DOMContentLoaded", function () {
         const toggleActions = document.querySelectorAll(".toggle-actions");
 
@@ -284,6 +331,15 @@
           loadingOverlay.style.display = "none"; /* Hide loading overlay */
         }
       });
+
+      function showLoadingSpinner() {
+        document.querySelector(".edit-form").classList.add("loading");
+        document.getElementById("loadingSpinner").style.display = "block";
+      }
+
+      function hideMessageCard(button) {
+        button.parentElement.style.display = "none";
+      }
     </script>
   </body>
 </html>

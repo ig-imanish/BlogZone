@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +9,48 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
     <link rel="stylesheet" th:href="@{/css/profile_edit.css}" />
+    <style>
+      .spinner {
+        display: none;
+        width: 50px;
+        height: 50px;
+        border: 6px solid #ccc;
+        border-top-color: #333;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading {
+        position: relative;
+        opacity: 0.7;
+      }
+
+      .message-card {
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+
+      .message-card.success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .message-card.error {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -16,10 +58,12 @@
         <div class="edit-form">
           <form
             class="register-form"
+            id="editProfileForm"
             th:action="@{/profile/edit}"
             th:object="${user}"
             method="post"
             enctype="multipart/form-data"
+            onsubmit="showLoadingSpinner()"
           >
             <div class="header">
               <!-- Banner Image -->
@@ -71,39 +115,38 @@
               />
             </div>
 
-             <!-- hidden -->
+            <!-- hidden -->
 
-              <input
-                type="text"
-                id="username"
-                th:field="*{username}"
-                hidden
-                th:value="*{username}"
-              />
+            <input
+              type="text"
+              id="username"
+              th:field="*{username}"
+              hidden
+              th:value="*{username}"
+            />
 
+            <input
+              type="text"
+              id="id"
+              th:field="*{id}"
+              hidden
+              th:value="*{id}"
+            />
 
-              <input
-                type="text"
-                id="id"
-                th:field="*{id}"
-                hidden
-                th:value="*{id}"
-              />
-
-               <input
-                type="text"
-                id="password"
-                th:field="*{password}"
-                hidden
-                th:value="*{password}"
-              />
- <input
-                type="text"
-                id="email"
-                th:field="*{email}"
-                hidden
-                th:value="*{email}"
-              />
+            <input
+              type="text"
+              id="password"
+              th:field="*{password}"
+              hidden
+              th:value="*{password}"
+            />
+            <input
+              type="text"
+              id="email"
+              th:field="*{email}"
+              hidden
+              th:value="*{email}"
+            />
 
             <!-- hidden  -->
 
@@ -149,25 +192,22 @@ Building Websites and Webapps with Seamless User Experience Across Devices.</tex
             </div>
           </form>
 
-          <div class="error" th:if="${error}">
-            <div class="alert alert-danger">
-              <span th:text="${error}"></span
-              ><i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-          </div>
-          <div class="error" th:if="${message}">
-            <div class="alert alert-success">
-              <span th:text="${message}"></span
-              ><i class="fa-regular fa-circle-check"></i>
-            </div>
-          </div>
-  
+          <div
+            class="message-card success"
+            th:if="${message}"
+            th:text="${message}"
+          ></div>
+          <div
+            class="message-card error"
+            th:if="${error}"
+            th:text="${error}"
+          ></div>
         </div>
       </div>
+      <div class="spinner" id="loadingSpinner"></div>
     </div>
 
     <script>
-      // JavaScript to handle image preview
       document
         .getElementById("profileImageUpload")
         .addEventListener("change", function (event) {
@@ -181,7 +221,6 @@ Building Websites and Webapps with Seamless User Experience Across Devices.</tex
             reader.readAsDataURL(file);
           }
         });
-
       document
         .getElementById("bannerImageUpload")
         .addEventListener("change", function (event) {
@@ -195,6 +234,11 @@ Building Websites and Webapps with Seamless User Experience Across Devices.</tex
             reader.readAsDataURL(file);
           }
         });
+
+      function showLoadingSpinner() {
+        document.querySelector(".edit-form").classList.add("loading");
+        document.getElementById("loadingSpinner").style.display = "block";
+      }
     </script>
   </body>
 </html>

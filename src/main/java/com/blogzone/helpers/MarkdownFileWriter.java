@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 public class MarkdownFileWriter {
 
-    public static void saveMarkdownFile(String fileName, String content) {
+    public static void saveMarkdownFile( String fileName, String content) {
         try {
             String directoryPath = "src/main/resources/static/md-files";
             Path directory = Paths.get(directoryPath);

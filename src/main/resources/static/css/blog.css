@@ -36,6 +36,11 @@ body {
   padding: 1rem;
   color: #ffffff !important;
 }
+.markdown-body {
+    padding: 0.6rem;
+    color: #dddbdb !important;
+
+}
 .markdown-body a {
     text-decoration:  none;
     color: #3498db;
