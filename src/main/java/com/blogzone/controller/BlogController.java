@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.blogzone.entity.Blog;
 import com.blogzone.service.BlogService;
+import com.blogzone.service.UserService;
 
 @Controller
 @RequestMapping("/blogs")
@@ -31,8 +33,11 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
-    public String getMethodName() {
+    public String blogs() {
         return "redirect:/home";
     }
 
@@ -41,6 +46,26 @@ public class BlogController {
         Blog blog = blogService.findBlogById(id);
         model.addAttribute("blog", blog);
         return "blogs/show";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBlogById(@PathVariable String id, Principal principal, RedirectAttributes redirectAttributes) {
+        if (principal == null) {
+            return "redirect:/auth/login";
+        }
+
+        String username = principal.getName();
+        Blog deletedBlog = blogService.findBlogById(id);
+
+        if (deletedBlog != null && deletedBlog.getAuthorId().equals(username)) {
+            blogService.deleteBlogById(id);
+            redirectAttributes.addFlashAttribute("message", "Blog with ID " + id + " deleted successfully");
+        } else {
+            // Handle case where blog doesn't exist or user is not authorized to delete it
+            redirectAttributes.addFlashAttribute("error", "Unable to delete blog with ID " + id);
+        }
+
+        return "redirect:/profile/" + username;
     }
 
     @GetMapping("/create")
@@ -60,7 +85,6 @@ public class BlogController {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
                 content = reader.lines().collect(Collectors.joining("\n"));
             } catch (IOException e) {
-                // Handle exception
                 e.printStackTrace();
             }
         }
@@ -69,12 +93,11 @@ public class BlogController {
             Date currentDate = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String stringDate = dateFormat.format(currentDate);
-            
+
             blog.setDateString(stringDate);
             if (principal != null) {
                 blog.setAuthorId(principal.getName());
             }
-
             Binary images = new Binary(image.getBytes());
             blog.setProductImage(images);
             blog.setImageBase64(Base64.getEncoder().encodeToString(image.getBytes()));

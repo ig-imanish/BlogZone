@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.blogzone.entity.Blog;
 import com.blogzone.entity.User;
@@ -23,19 +24,16 @@ public class HomeController {
     private UserService userService;
 
     @GetMapping("/")
-    public String getIndex(Model model, Principal principal) {
+    public String getBlogs(Model model, @RequestParam(defaultValue = "10", required = false) int numOfBlogs, Principal principal) {
         addUserInfoToModel(model, principal);
         List<Blog> blogs = blogService.findAllBlogs();
         model.addAttribute("blogs", blogs);
-        return "index";
+        return "index"; 
     }
 
     @GetMapping("/home")
-    public String getHome(Model model, Principal principal) {
-        addUserInfoToModel(model, principal);
-        List<Blog> blogs = blogService.findAllBlogs();
-        model.addAttribute("blogs", blogs);
-        return "index";
+    public String getHome() {
+        return "redirect:/";
     }
 
     private void addUserInfoToModel(Model model, Principal principal) {
@@ -47,28 +45,4 @@ public class HomeController {
             }
         }
     }
-
-    // @GetMapping("/profile")
-    // public String profile(HttpServletRequest request, Model model, Principal
-    // principal) {
-    // Cookie[] cookies = request.getCookies();
-    // System.out.println(principal.getName());
-    // if (cookies != null) {
-    // for (Cookie cookie : cookies) {
-    // if ("username".equals(cookie.getName())) {
-    // String username = cookie.getValue();
-    // System.out.println("username " + username);
-    // if (username != null && !username.isEmpty()) {
-    // User user = userService.findUserByEmail(username);
-
-    // model.addAttribute("user", user);
-    // return "profile";
-    // }
-    // }
-    // }
-
-    // }
-    // model.addAttribute("error", "user havent logined yet");
-    // return "profile";
-    // }
 }

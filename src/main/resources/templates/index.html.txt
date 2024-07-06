@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Page</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/global.css" /> -->
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="head">
+        <h2>
+          Hey,
+          <span th:if="${user != null}" th:text="${user.fullName} ?: 'Guest!'"
+            >User Full Name</span
+          >
+          <span th:if="${user == null}">Guest</span>
+        </h2>
+        <div class="bell-icon"><i class="fa-regular fa-bell"></i></div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <section class="categories">
+        <div class="categories-list">
+          <button class="category active">Technology</button>
+          <button class="category">Business</button>
+          <button class="category">Design</button>
+          <button class="category">Productivity</button>
+        </div>
+      </section>
+      <section class="articles">
+        <div th:each="blog : ${blogs}" class="article">
+          <!-- <img th:src="@{${blog.imageBase64}}" alt="Img" /> -->
+
+          <img
+            th:if="${blog.imageBase64}"
+            th:src="'data:image/jpeg;base64,' + ${blog.imageBase64}"
+            alt="Image"
+          />
+          <img
+            th:unless="${blog.imageBase64}"
+            th:src="@{/img/background.jpg}"
+            alt="Image"
+          />
+
+          <div class="article-content">
+            <span class="source" th:text="${blog.authorId}"></span>
+            <h3 class="title">
+              <a th:href="@{'/blogs/' + ${blog.id}}" th:text="${blog.title}"></a>
+            </h3>
+            <span
+              class="date"
+              th:text="${blog.dateString}"
+            ></span>
+            <button class="toggle-actions">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <div class="article-actions">
+              <button title="Share"><i class="fa-solid fa-share"></i></button>
+              <button title="Delete"><i class="fa-solid fa-trash"></i></button>
+              <button title="Edit"><i class="fa-solid fa-edit"></i></button>
+              <button class="close-actions" style="display: none">
+                <i class="fa-solid fa-times"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="bottom-nav-container">
+        <nav class="bottom-nav">
+          <button class="nav-item">
+            <a href="/home"><i class="fa-regular fa-paper-plane"></i></a>
+          </button>
+
+          <button class="nav-item">
+            <a href="/blogs/create">
+              <i class="fa-solid fa-plus create-blog-btn"></i
+            ></a>
+          </button>
+          <button class="nav-item">
+            <a href="/blogs/saved"><i class="fa-regular fa-bookmark"></i></a>
+          </button>
+
+          <button class="nav-item" th:if="${user != null}">
+            <a th:href="@{/profile/{username}(username=${user.username})}">
+              <i class="fa-regular fa-user"></i>
+            </a>
+          </button>
+          <button class="nav-item" th:unless="${user != null}">
+            <a href="/auth/login">
+              <i class="fa-regular fa-user"></i>
+            </a>
+          </button>
+
+        </nav>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleActions = document.querySelectorAll(".toggle-actions");
+
+        toggleActions.forEach((toggle) => {
+          toggle.addEventListener("click", () => {
+            const articleActions =
+              toggle.parentElement.querySelector(".article-actions");
+            const closeActionsBtn =
+              articleActions.querySelector(".close-actions");
+            if (articleActions.classList.contains("show")) {
+              articleActions.classList.remove("show");
+              closeActionsBtn.style.display = "none";
+            } else {
+              document
+                .querySelectorAll(".article-actions")
+                .forEach((actions) => {
+                  actions.classList.remove("show");
+                  actions.querySelector(".close-actions").style.display =
+                    "none";
+                });
+              articleActions.classList.add("show");
+              closeActionsBtn.style.display = "block";
+            }
+          });
+        });
+        document.addEventListener("click", function (event) {
+          const articleActions = document.querySelectorAll(".article-actions");
+          const toggleActions = document.querySelectorAll(".toggle-actions");
+          if (
+            !event.target.closest(".article-actions") &&
+            !event.target.closest(".toggle-actions")
+          ) {
+            articleActions.forEach((actions) => {
+              actions.classList.remove("show");
+              actions.querySelector(".close-actions").style.display = "none";
+            });
+          }
+        });
+        document.querySelectorAll(".close-actions").forEach((closeBtn) => {
+          closeBtn.addEventListener("click", (event) => {
+            const articleActions = closeBtn.parentElement;
+            articleActions.classList.remove("show");
+            closeBtn.style.display = "none";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

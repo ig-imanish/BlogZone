@@ -3,6 +3,7 @@
   --bg-color-article: #2c2e50;
   --bg-color-navbar: #333963;
   --bg-color: #282a46;
+  --text-url-color: #3498db;
 }
 
 body {
@@ -96,7 +97,7 @@ p {
 }
 p a {
   text-decoration: none;
-  color: var(--text-color-light);
+  color: var(--text-url-color);
 }
 p a:hover {
   text-decoration: underline;

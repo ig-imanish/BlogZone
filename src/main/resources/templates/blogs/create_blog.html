@@ -1,85 +1,126 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>New Blog Entry</title>
     <link rel="stylesheet" th:href="@{/css/auth.css}" />
-    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/auth.css" /> -->
+    <link rel="stylesheet" href="/src/main/resources/static/css/auth.css" />
     <style></style>
-</head>
-<body>
-<div class="container">
-    <div class="head">
+  </head>
+  <body>
+    <div class="container">
+      <div class="head">
         <h2>Create New Blog Entry</h2>
-    </div>
-    <form class="register-form" th:action="@{/blogs/create}" th:object="${blog}" method="post" enctype="multipart/form-data">
+      </div>
+      <form
+        class="register-form"
+        th:action="@{/blogs/create}"
+        th:object="${blog}"
+        method="post"
+        enctype="multipart/form-data"
+      >
         <div class="form-group">
-            <label>Title:</label><br />
-            <input type="text" th:field="*{title}" placeholder="Enter the title" required />
+          <label>Title:</label><br />
+          <input
+            type="text"
+            th:field="*{title}"
+            placeholder="Enter the title"
+            required
+          />
         </div>
         <div class="form-group">
-            <label>Categories:</label><br />
-            <input type="text" th:field="*{categories}" placeholder="Enter categories separated by commas" />
+          <label>Categories:</label><br />
+          <input
+            type="text"
+            th:field="*{categories}"
+            placeholder="Enter categories separated by commas"
+          />
         </div>
         <div class="form-group">
-            <label>Description:</label>
-            <textarea id="description" rows="5" name="content" placeholder="Enter description here..."></textarea>
+          <label>Description:</label>
+          <textarea
+            id="description"
+            rows="5"
+            name="content"
+            placeholder="Enter description here..."
+          ></textarea>
         </div>
         <div class="form-group">
-            <div class="input-group custom-file-button">
-                <label>.md File :</label>
-                <input id="mdFile" class="form-control" type="file" name="file" accept=".md" />
-                <button type="button" style="border-radius: 4px; border: none;" onclick="clearMdFile()">Cancel</button>
-            </div>
+          <div class="input-group custom-file-button">
+            <label>.md File :</label>
+            <input
+              id="mdFile"
+              class="form-control"
+              type="file"
+              name="file"
+              accept=".md"
+            />
+            <button
+              type="button"
+              style="border-radius: 4px; border: none"
+              onclick="clearMdFile()"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
         <div class="form-group">
-            <div class="input-group custom-file-button">
-                <label>Blog Thumbnail:</label>
-                <input class="form-control" type="file" name="image" accept=".jpg, .png, .jpeg"/>
-                <small>it will show on the home page!</small>
-            </div>
+          <div class="input-group custom-file-button">
+            <label>Blog Thumbnail:</label>
+            <input
+              class="form-control"
+              type="file"
+              name="image"
+              accept=".jpg, .png, .jpeg"
+            />
+            <small>it will show on the home page!</small>
+          </div>
         </div>
         <input class="submit-btn" type="submit" value="Create Blog" />
-    </form>
+      </form>
+      <p><a th:href="@{/profile}">Go to profile</a></p>
 
-    <div class="error" th:if="${error}">
+      <div class="error" th:if="${error}">
         <div class="alert alert-danger">
-            <span th:text="${error}"></span
-            ><i class="fa-solid fa-triangle-exclamation"></i>
+          <span th:text="${error}"></span
+          ><i class="fa-solid fa-triangle-exclamation"></i>
         </div>
-    </div>
-    <div class="error" th:if="${message}">
+      </div>
+      <div class="error" th:if="${message}">
         <div class="alert alert-success">
-            <span th:text="${message}"></span
-            ><i class="fa-regular fa-circle-check"></i>
+          <span th:text="${message}"></span
+          ><i class="fa-regular fa-circle-check"></i>
         </div>
+      </div>
     </div>
-</div>
 
-<script>
-
-    function clearMdFile() {
+    <script>
+      function clearMdFile() {
         var mdFileInput = document.querySelector("#mdFile");
-        mdFileInput.value = '';
-    }
+        mdFileInput.value = "";
+      }
 
-    document.querySelector("form").addEventListener("submit", function (event) {
-        var textarea = document.querySelector("#description");
-        var mdFileInput = document.querySelector("#mdFile");
-        var descriptionFilled = textarea.value.trim() !== "";
-        var mdFileFilled = mdFileInput.files.length > 0;
+      document
+        .querySelector("form")
+        .addEventListener("submit", function (event) {
+          var textarea = document.querySelector("#description");
+          var mdFileInput = document.querySelector("#mdFile");
+          var descriptionFilled = textarea.value.trim() !== "";
+          var mdFileFilled = mdFileInput.files.length > 0;
 
-        if (!descriptionFilled && !mdFileFilled) {
+          if (!descriptionFilled && !mdFileFilled) {
             alert("Please provide either a description or a markdown file.");
             event.preventDefault();
             return;
-        }
-        if (descriptionFilled && mdFileFilled) {
-            alert("Please provide either a description or a markdown file, not both.");
+          }
+          if (descriptionFilled && mdFileFilled) {
+            alert(
+              "Please provide either a description or a markdown file, not both."
+            );
             event.preventDefault();
             return;
-        }
-    });
-</script>
-</body>
+          }
+        });
+    </script>
+  </body>
 </html>

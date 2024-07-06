@@ -34,24 +34,35 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public String profile(Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            return "redirect:/profile/" + username;
+        }
+        return "home";
+    }
+
     @GetMapping("/{username}")
     public String profileById(@PathVariable String username, HttpServletRequest request, Model model,
             Principal principal) {
-
         User user = userService.findByUsername(username);
         if (user == null) {
             System.out.println("null hai user");
             model.addAttribute("error", "User not found");
-            return "profile"; // Ensure profile.html handles the error attribute
+            model.addAttribute("loading", false); // No longer loading
+            return "profile";
         }
 
-        // Check if the current user is viewing their own profile
         if (principal != null) {
             String currentUsername = principal.getName();
             model.addAttribute("currUsername", currentUsername);
             if (currentUsername.equals(username)) {
                 model.addAttribute("current", true);
             }
+        }
+        if (principal == null) {
+            model.addAttribute("current", false);
         }
 
         List<Blog> blogs = blogService.findByUsername(username);
@@ -61,15 +72,15 @@ public class UserController {
         model.addAttribute("totalSavedBlogs", totalSavedBlogs);
         model.addAttribute("totalBlogs", totalBlogs);
         model.addAttribute("blogs", blogs);
-        model.addAttribute("current", false);
         model.addAttribute("user", user);
+        model.addAttribute("loading", true);
         return "profile";
     }
 
     @GetMapping("/edit")
-    public String editPage(Model model,Principal principal) {
+    public String editPage(Model model, Principal principal) {
 
-        if(principal != null){
+        if (principal != null) {
             String username = principal.getName();
             User user = userService.findByUsername(username);
             model.addAttribute("user", user);
@@ -94,17 +105,17 @@ public class UserController {
             model.addAttribute("error", "you are not owner");
             return "profile_edit";
         }
-            if (!avatar.isEmpty()) {
-                Binary avatar1 = new Binary(avatar.getBytes());
-                user.setUserAvatar(avatar1);
-                user.setUserAvatarBase64(Base64.getEncoder().encodeToString(avatar.getBytes()));
-            }
+        if (!avatar.isEmpty()) {
+            Binary avatar1 = new Binary(avatar.getBytes());
+            user.setUserAvatar(avatar1);
+            user.setUserAvatarBase64(Base64.getEncoder().encodeToString(avatar.getBytes()));
+        }
 
-            if (!banner.isEmpty()) {
-                Binary banner1 = new Binary(banner.getBytes());
-                user.setUserBanner(banner1);
-                user.setUserBannerBase64(Base64.getEncoder().encodeToString(banner.getBytes()));
-            }
+        if (!banner.isEmpty()) {
+            Binary banner1 = new Binary(banner.getBytes());
+            user.setUserBanner(banner1);
+            user.setUserBannerBase64(Base64.getEncoder().encodeToString(banner.getBytes()));
+        }
         userService.updateUser(user);
         System.out.println("Uploaded " + user);
         model.addAttribute("message", "successfully updated profile!");

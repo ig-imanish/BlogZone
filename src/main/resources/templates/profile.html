@@ -9,8 +9,15 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
     <link rel="stylesheet" th:href="@{/css/global.css}" />
+
+    <link rel="stylesheet" href="/src/main/resources/static/css/global.css" />
   </head>
   <body>
+    <!-- Loading overlay -->
+    <div th:if="${loading}" class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+
     <div class="container" th:if="${user != null}">
       <div class="profile-section">
         <div class="header">
@@ -48,11 +55,33 @@
               </p>
             </div>
             <div class="top-btns">
-              <a href="#" class="follow-btn">Following</a>
+              <a href="#" class="follow-btn" th:if="${!current}"> Follow </a>
+              <a href="/profile/edit" class="setting-btn" th:if="${current}">
+                Edit Profile
+              </a>
+
+              <a
+                href="#"
+                class="message-btn"
+                th:classappend="${current ? 'disabled' : ''}"
+                th:if="${current}"
+              >
+                Message
+              </a>
+              <a
+                th:href="@{'/setting/' + ${currUsername}}"
+                class="setting-btn"
+                th:classappend="${current ? 'disabled' : ''}"
+                th:if="${current}"
+              >
+                <i class="fa-solid fa-gear"></i>
+              </a>
+
+              <!-- <a href="#" class="follow-btn">Following</a>
               <a href="#" class="message-btn">Message</a>
               <a href="/profile/edit" class="setting-btn"
                 ><i class="fa-solid fa-gear"></i
-              ></a>
+              ></a> -->
             </div>
           </div>
           <p th:if="${user.bio}" th:text="${user.bio}">User Bio</p>
@@ -88,6 +117,23 @@
       </div>
       <div class="articles">
         <article class="articles">
+          <!-- Check if blogs list is empty -->
+
+          <div th:if="${blogs.empty}" class="no-article">
+            <img
+              th:src="@{/icons/green-img.png}"
+              src="/src/main/resources/static/icons/green-img.png"
+              alt="default"
+            />
+            <div>
+              <h3>Share Blogs</h3>
+              <p>When you share blogs, they will appear on your profile.</p>
+              <a href="/blogs/create" class="create-blog-btn-profile"
+                >Share your first photo</a
+              >
+            </div>
+          </div>
+
           <div th:each="blog : ${blogs}" class="article">
             <img
               th:if="${blog.imageBase64}"
@@ -107,15 +153,27 @@
                 >
               </h3>
               <span class="date" th:text="${blog.dateString}"></span>
+
               <button class="toggle-actions">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
               </button>
               <div class="article-actions">
-                <button title="Share"><i class="fa-solid fa-share"></i></button>
-                <button title="Delete">
-                  <i class="fa-solid fa-trash"></i>
+                <button title="Share">
+                  <a th:href="@{'/blogs/' + ${blog.id}}"
+                    ><i class="fa-solid fa-share"></i
+                  ></a>
                 </button>
-                <button title="Edit"><i class="fa-solid fa-edit"></i></button>
+                <button title="Delete">
+                  <a th:href="@{'/blogs/delete/' + ${blog.id}}">
+                    <i class="fa-solid fa-trash"></i>
+                  </a>
+                </button>
+                <button title="Edit">
+                  <a th:href="@{'/blogs/edit/' + ${blog.id}}">
+                    <i class="fa-solid fa-edit"></i
+                  ></a>
+                </button>
+
                 <button class="close-actions" style="display: none">
                   <i class="fa-solid fa-times"></i>
                 </button>
@@ -123,6 +181,15 @@
             </div>
           </div>
         </article>
+        <!-- Check if there is a success message -->
+        <div th:if="${message}">
+          <p th:text="${message}" class="success-message"></p>
+        </div>
+
+        <!-- Check if there is an error message -->
+        <div th:if="${error}">
+          <p th:text="${error}" class="error-message"></p>
+        </div>
       </div>
     </div>
     <div class="container" th:if="${error}">
@@ -204,6 +271,18 @@
             closeBtn.style.display = "none";
           });
         });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var loadingOverlay = document.querySelector(".loading-overlay");
+        /* Check if Thymeleaf variable 'loading' is true/false */
+        var loading = /*[[${loading}]]*/ false;
+
+        if (loading) {
+          loadingOverlay.style.display = "flex"; /* Show loading overlay */
+        } else {
+          loadingOverlay.style.display = "none"; /* Hide loading overlay */
+        }
       });
     </script>
   </body>

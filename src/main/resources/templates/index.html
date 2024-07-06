@@ -54,12 +54,12 @@
           <div class="article-content">
             <span class="source" th:text="${blog.authorId}"></span>
             <h3 class="title">
-              <a th:href="@{'/blogs/' + ${blog.id}}" th:text="${blog.title}"></a>
+              <a
+                th:href="@{'/blogs/' + ${blog.id}}"
+                th:text="${blog.title}"
+              ></a>
             </h3>
-            <span
-              class="date"
-              th:text="${blog.dateString}"
-            ></span>
+            <span class="date" th:text="${blog.dateString}"></span>
             <button class="toggle-actions">
               <i class="fa-solid fa-ellipsis-vertical"></i>
             </button>
@@ -100,7 +100,6 @@
               <i class="fa-regular fa-user"></i>
             </a>
           </button>
-
         </nav>
       </div>
     </div>
