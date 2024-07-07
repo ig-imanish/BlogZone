@@ -2,6 +2,7 @@ package com.blogzone.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.blogzone.entity.Blog;
-import com.blogzone.helpers.CodeGenerator;
 import com.blogzone.helpers.MarkdownFileWriter;
 import com.blogzone.repository.BlogRepository;
 
@@ -19,14 +19,15 @@ public class BlogService {
     private BlogRepository blogRepository;
 
     public void saveBlog(Blog blog) {
-        CodeGenerator codeGenerator = new CodeGenerator();
-        blog.setId(codeGenerator.generateBlogId());
-        MarkdownFileWriter.saveMarkdownFile( blog.getId() + ".md", blog.getContent());
+        MarkdownFileWriter.saveMarkdownFile(blog.getAuthorId() ,blog.getId() + ".md", blog.getContent());
         blogRepository.save(blog);
     }
 
     public Blog findBlogById(String id) {
-        return blogRepository.findById(id).orElse(null);
+        Optional<Blog> blogs = blogRepository.findById(id);
+        if (blogs.isEmpty())
+            return null;
+        return blogs.get();
     }
 
     public void deleteBlogById(String id) {

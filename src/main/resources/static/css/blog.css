@@ -3,6 +3,8 @@
   --bg-color-article: #2c2e50;
   --bg-color-navbar: #333963;
   --bg-color: #282a46;
+  --bg-color-og: #252740;
+  --text-url-color: #3498db;
 }
 
 body {
@@ -37,14 +39,125 @@ body {
   color: #ffffff !important;
 }
 .markdown-body {
-    padding: 0.6rem;
-    color: #dddbdb !important;
-
+  padding: 0.6rem;
+  color: #dddbdb !important;
 }
 .markdown-body a {
-    text-decoration:  none;
-    color: #3498db;
+  text-decoration: none;
+  color: #3498db;
 }
 .markdown-body a:hover {
-    text-decoration:  underline;
+  text-decoration: underline;
+}
+
+.header {
+  padding: 1rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+.title h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--text-color-light);
+}
+
+.profile {
+  background: var(--bg-color-og);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+  align-items: center;
+}
+.profile .box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile .box .info {
+  margin-top: 15px;
+}
+.profile .box .info span a {
+  position: sticky;
+  margin-right: 10px;
+  text-decoration: none;
+  color: var(--text-url-color);
+}
+.profile .box .info span a:hover {
+  text-decoration: underline;
+}
+.profile .box span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.profile .box .info .small-text,
+.profile .box .info p {
+  font-size: small;
+}
+.profile .avatar {
+  margin-left: 6px;
+  margin-top: 6px;
+  background: none;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile .avatar img {
+  height: 66px;
+  width: 66px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.info {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.top-btns {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+}
+.top-btns a {
+  text-decoration: none;
+  color: white;
+}
+.follow-btn,
+.setting-btn,
+.message-btn {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.follow-btn:hover,
+.setting-btn:hover,
+.message-btn:hover {
+  background-color: var(--bg-color-navbar);
+  border-color: var(--bg-color-navbar);
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+.message-card {
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.message-card.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }

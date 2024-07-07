@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <title>New Blog Entry</title>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+    ></script>
     <link rel="stylesheet" th:href="@{/css/auth.css}" />
-    <link rel="stylesheet" href="/src/main/resources/static/css/auth.css" />
-    <style></style>
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/auth.css" /> -->
   </head>
   <body>
     <div class="container">
@@ -44,6 +47,7 @@
             name="content"
             placeholder="Enter description here..."
           ></textarea>
+          <button type="button" id="preview-button">Preview!</button>
         </div>
         <div class="form-group">
           <div class="input-group custom-file-button">
@@ -73,7 +77,7 @@
               name="image"
               accept=".jpg, .png, .jpeg"
             />
-            <small>it will show on the home page!</small>
+            <small>It will show on the home page!</small>
           </div>
         </div>
         <input class="submit-btn" type="submit" value="Create Blog" />
@@ -89,12 +93,43 @@
       <div class="error" th:if="${message}">
         <div class="alert alert-success">
           <span th:text="${message}"></span
-          ><i class="fa-regular fa-circle-check"></i>
+          > <a th:href="'/blogs/' + ${blogId}" th:text="${blogId}"></a><i class="fa-regular fa-circle-check"></i>
+        </div>
+      </div>
+
+      <div class="card-overlay" id="card-overlay"></div>
+      <div class="card" id="markdown-card">
+        <button class="close-btn" onclick="closePreview()">✖</button>
+        <div class="register-form">
+          <zero-md id="markdown-preview">
+            <script type="text/markdown" id="markdown-content"></script>
+          </zero-md>
         </div>
       </div>
     </div>
 
     <script>
+      function showPreview() {
+        const markdownContent = document.getElementById("description").value;
+        const scriptTag = document.getElementById("markdown-content");
+        scriptTag.textContent = markdownContent;
+        // Dispatch an event to let zero-md know that the script content has changed
+        scriptTag.dispatchEvent(new Event("content-changed"));
+        // Show the card and overlay
+        document.getElementById("card-overlay").style.display = "block";
+        document.getElementById("markdown-card").style.display = "block";
+      }
+
+      function closePreview() {
+        document.getElementById("card-overlay").style.display = "none";
+        document.getElementById("markdown-card").style.display = "none";
+      }
+
+      // Add event listener to the button
+      document
+        .getElementById("preview-button")
+        .addEventListener("click", showPreview);
+
       function clearMdFile() {
         var mdFileInput = document.querySelector("#mdFile");
         mdFileInput.value = "";

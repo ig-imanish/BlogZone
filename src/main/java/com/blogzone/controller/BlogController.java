@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.blogzone.entity.Blog;
+import com.blogzone.helpers.CodeGenerator;
 import com.blogzone.service.BlogService;
 import com.blogzone.service.UserService;
 
@@ -44,7 +45,14 @@ public class BlogController {
     @GetMapping("/{id}")
     public String getBlog(@PathVariable String id, Model model) {
         Blog blog = blogService.findBlogById(id);
+        if(blog == null) {
+            model.addAttribute("error", "Blog not found");
+            return "blogs/show";
+        }
+        String avatar = userService.findByUsername(blog.getAuthorId()).getUserAvatarBase64();
+        System.out.println(blog);
         model.addAttribute("blog", blog);
+        model.addAttribute("avatar", avatar);
         return "blogs/show";
     }
 
@@ -106,9 +114,12 @@ public class BlogController {
             model.addAttribute("error", "Error while uploading image");
             return "blogs/create_blog";
         }
+        CodeGenerator codeGenerator = new CodeGenerator();
+        blog.setId(codeGenerator.generateBlogId());
         System.out.println("saving " + blog);
         blogService.saveBlog(blog);
-        model.addAttribute("message", "successfully created blog, Blog id is : " + blog.getId());
+        model.addAttribute("blogId", blog.getId());
+        model.addAttribute("message", "successfully created blog ");
         return "blogs/create_blog";
     }
 }

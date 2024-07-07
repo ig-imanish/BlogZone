@@ -496,6 +496,33 @@ body {
 .create-blog-btn-profile:hover {
   text-decoration: underline;
 }
+
+.message-card {
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.message-card.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.message-card.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+.cancel-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

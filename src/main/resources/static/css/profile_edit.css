@@ -124,11 +124,10 @@ body {
 }
 
 .btn-group {
-display: flex;
+  display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
-
 
 .save-btn,
 .cancel-btn {
@@ -140,7 +139,7 @@ display: flex;
   border: none;
   border-radius: 5px;
   width: 48%;
-  text-decoration: none; 
+  text-decoration: none;
   padding: 0.75rem 0px;
   cursor: pointer;
   font-size: 1rem;
@@ -280,4 +279,45 @@ a {
 .alert-success i {
   margin-left: 10px;
   color: rgb(14, 197, 7);
+}
+
+.spinner {
+  display: none;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  position: relative;
+  opacity: 0.7;
+}
+
+.message-card {
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.message-card.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.message-card.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }
