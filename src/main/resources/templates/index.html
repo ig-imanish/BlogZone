@@ -9,7 +9,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
-    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/global.css" /> -->
+    <link rel="stylesheet" href="/src/main/resources/static/css/global.css" />
     <link rel="stylesheet" th:href="@{/css/global.css}" />
   </head>
 
@@ -73,6 +73,10 @@
             </div>
           </div>
         </div>
+        <form action="" th:action="@{/}" method="get">
+          <input type="hidden" name="numOfBlogs" th:value="${numOfBlogs}" />
+          <button class="show-more-btn" type="submit">Show More</button>
+        </form>
       </section>
 
       <div class="bottom-nav-container">

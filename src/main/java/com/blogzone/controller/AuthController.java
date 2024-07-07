@@ -33,7 +33,7 @@ public class AuthController {
 
     @GetMapping("/")
     public String index(Principal principal) {
-        
+
         if (principal != null) {
             System.out.println(principal.getName());
             return "redirect:/home";
@@ -46,21 +46,21 @@ public class AuthController {
         if (principal != null) {
             return "redirect:/home";
         }
-        model.addAttribute("user", new UserDto()); // Initialize a new UserDto for the form
+        model.addAttribute("user", new UserDto());
         return "auth/register";
     }
 
+    @SuppressWarnings("null")
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
-                               BindingResult result,
-                               Model model) {
-        // Check if email already exists
+            BindingResult result,
+            Model model) {
+
         User existingUserByEmail = userService.findUserByEmail(userDto.getEmail());
         if (existingUserByEmail != null) {
             result.rejectValue("email", null, "There is already an account registered with this email");
         }
 
-        // Check if username already exists
         User existingUserByUsername = userService.findByUsername(userDto.getUsername());
         if (existingUserByUsername != null) {
             result.rejectValue("username", null, "This username is already taken");
@@ -84,7 +84,8 @@ public class AuthController {
     }
 
     @GetMapping("/loginPage")
-    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model, Principal principal) {
+    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model,
+            Principal principal) {
         if (principal != null) {
             return "redirect:/home";
         }

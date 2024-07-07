@@ -31,6 +31,7 @@ public class BlogService {
     }
 
     public void deleteBlogById(String id) {
+        MarkdownFileWriter.deleteMarkdownFile(blogRepository.findById(id).get().getAuthorId(), id);
         blogRepository.deleteById(id);
     }
 

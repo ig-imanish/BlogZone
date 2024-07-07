@@ -522,7 +522,18 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
-
+.articles .show-more-btn {
+  border: none;
+  background-color: var(--bg-color-article);
+  padding: 8px 16px;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  float: right;
+}
+.articles .show-more-btn:hover {
+  background-color: var(--bg-color-navbar);
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);

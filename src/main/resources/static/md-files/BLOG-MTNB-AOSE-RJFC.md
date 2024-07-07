@@ -1,4 +1,0 @@
-# Max file size
-spring.servlet.multipart.max-file-size=10MB
-# Max request size
-spring.servlet.multipart.max-request-size=10MB

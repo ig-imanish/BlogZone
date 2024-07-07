@@ -1,6 +1,7 @@
 package com.blogzone.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,25 @@ public class HomeController {
     private UserService userService;
 
     @GetMapping("/")
-    public String getBlogs(Model model, @RequestParam(defaultValue = "10", required = false) int numOfBlogs, Principal principal) {
+    public String getBlogs(Model model, @RequestParam(defaultValue = "0", required = false) int numOfBlogs, Principal principal) {
         addUserInfoToModel(model, principal);
         List<Blog> blogs = blogService.findAllBlogs();
-        model.addAttribute("blogs", blogs);
+
+        if(blogs.size() <= 10){
+            model.addAttribute("blogs", blogs);
+            return "index";
+        }
+        List<Blog> blogsList = new ArrayList<>();
+
+        int n = 10 + numOfBlogs;
+        if (n > blogs.size()){
+            n = blogs.size() - 1;
+        }
+        for(int i = 0; i < n; i++){
+            blogsList.add(blogs.get(i));
+        }
+        model.addAttribute("numOfBlogs", n);
+        model.addAttribute("blogs", blogsList);
         return "index"; 
     }
 

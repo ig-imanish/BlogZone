@@ -8,9 +8,9 @@ import java.nio.file.Paths;
 
 public class MarkdownFileWriter {
 
-    public static void saveMarkdownFile( String author,String fileName, String content) {
+    public static void saveMarkdownFile(String author, String fileName, String content) {
         try {
-            
+
             String directoryPath = "src/main/resources/static/md-files/" + author;
             Path directory = Paths.get(directoryPath);
             if (!Files.exists(directory)) {
@@ -29,6 +29,31 @@ public class MarkdownFileWriter {
 
         } catch (IOException e) {
             System.err.println("Failed to save Markdown file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteMarkdownFile(String author, String fileName) {
+        try {
+
+            String directoryPath = "src/main/resources/static/md-files/" + author;
+            Path directory = Paths.get(directoryPath);
+            if (!Files.exists(directory)) {
+                Files.createDirectories(directory);
+            }
+
+            // Create file path
+            Path filePath = Paths.get(directoryPath, fileName);
+            // deleting the file
+            if (filePath.toFile().delete()) {
+
+                System.out.println("Markdown file delete successfully: " + filePath.toString());
+            } else {
+                System.out.println("Failed to delete Markdown file : " + filePath.toString());
+            }
+
+        } catch (IOException e) {
+            System.err.println("Failed to delete Markdown file: " + e.getMessage());
             e.printStackTrace();
         }
     }

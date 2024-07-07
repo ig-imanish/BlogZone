@@ -1,1 +1,0 @@
-<span th:text="${message}"></span>

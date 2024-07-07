@@ -1,94 +1,146 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Page</title>
 
-    <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
-
+    <!-- Load Zero-md and Highlight.js asynchronously -->
+    <script
+      type="module"
+      async
+      src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+    ></script>
     <link rel="stylesheet" th:href="@{/css/blog.css}" />
-    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/blog.css" /> -->
-    <title>Blog Page</title>
-</head>
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css"
+    /> -->
+  </head>
 
-<body>
-
+  <body>
     <div th:if="${error}">
-        <div class="header">
-            <div class="message-card error" th:text="${error}"></div>
-        </div>
+      <div class="header">
+        <div class="message-card error" th:text="${error}"></div>
+      </div>
     </div>
     <div class="container" th:if="${blog != null}">
-        <div class="header">
-            <div class="title">
-                <h2 th:text="${blog.title}">This is blog title bla bla bla..bla bla bla</h2>
-            </div>
-
-            <div class="profile">
-                <div class="box">
-                    <div class="avatar">
-                        <img th:if="${avatar}" th:src="'data:image/jpeg;base64,' + ${avatar}" alt="Image" />
-                        <img th:unless="${avatar}"
-                            src="/src/main/resources/static/icons/pexels-cmonphotography-1809644.jpg" alt="Avatar">
-                    </div>
-                    <div class="info">
-                        <span>
-                            <span class="small-text">Published by</span> - <span
-                                th:text="${blog.authorId}">@itz_Manish02</span>
-                            <a href="#">Follow</a>
-                        </span>
-                        <p th:text="'At ' + ${blog.dateString}">At 15-06-2024 12:00 PM</p>
-                    </div>
-
-                </div>
-                <div class="top-btns">
-                    <a href="/profile/edit" class="setting-btn"> Report Blog </a>
-                    <a href="#" class="message-btn"> Share </a>
-                    <a href="/setting/username" class="setting-btn"> Save Blog </a>
-                </div>
-            </div>
+      <div class="header">
+        <div class="title">
+          <h2 th:text="${blog.title}">
+            This is blog title bla bla bla..bla bla bla
+          </h2>
         </div>
 
-        <div class="register-form">
-            <!-- <zero-md src="/src/main/resources/static/md-files/BLOG-UHVJ-POST-HLQK.md">
-                <template>
-                    <style>
-                        :host {
-                            display: block;
-                            position: relative;
-                            contain: content;
-                        }
-
-                        :host([hidden]) {
-                            display: none;
-                        }
-                    </style>
-                    <link rel="stylesheet" href="/src/main/resources/static/css/blog.css" />
-                    <link rel="stylesheet"
-                        href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css" />
-
-            </zero-md> -->
-            <zero-md th:src="@{'/md-files/' + ${blog.authorId} + '/' + ${blog.id} + '.md'}">
-                <template>
-                    <style>
-                        :host {
-                            display: block;
-                            position: relative;
-                            contain: content;
-                        }
-
-                        :host([hidden]) {
-                            display: none;
-                        }
-                    </style>
-                    <link rel="stylesheet" th:href="@{/css/blog.css}" />
-                    <link rel="stylesheet"
-                        href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css" />
-            </zero-md>
+        <div class="profile">
+          <div class="box">
+            <div class="avatar">
+              <img
+                th:if="${avatar}"
+                th:src="'data:image/jpeg;base64,' + ${avatar}"
+                alt="Image"
+              />
+              <img
+                th:unless="${avatar}"
+                src="/src/main/resources/static/icons/pexels-cmonphotography-1809644.jpg"
+                alt="Avatar"
+              />
+            </div>
+            <div class="info">
+              <span>
+                <span class="small-text">Published by - </span
+                ><span th:text="${blog.authorId}">@itz_Manish02</span>
+                <a href="#">Follow</a>
+              </span>
+              <p th:text="'At   ' + ${blog.dateString}">
+                At 15-06-2024 12:00 PM
+              </p>
+            </div>
+          </div>
+          <div class="top-btns">
+            <a href="/profile/edit" class="setting-btn"> Report Blog </a>
+            <a href="#" class="message-btn"> Share </a>
+            <a href="/setting/username" class="setting-btn"> Save Blog </a>
+          </div>
         </div>
+      </div>
+
+      <div class="register-form">
+        <!-- <zero-md
+          th:src="@{'/md-files/' + ${blog.authorId} + '/' + ${blog.id} + '.md'}"
+        >
+          <template>
+            <style>
+              :host {
+                display: block;
+                position: relative;
+                contain: content;
+              }
+
+              :host([hidden]) {
+                display: none;
+              }
+            </style>
+            <link rel="stylesheet" th:href="@{/css/blog.css}" />
+          </template>
+        </zero-md> -->
+        <zero-md
+          th:src="@{'/md-files/' + ${blog.authorId} + '/' + ${blog.id} + '.md'}"
+          on-load="removeLoadingMessage()"
+        >
+          <template>
+            <style>
+              :host {
+                display: block;
+                position: relative;
+                contain: content;
+                max-width: 100%;
+                overflow-x: auto; /* Add horizontal scrollbar */
+                padding: 1em;
+                /* background-color: #f8f8f8; */
+                /* border: 1px solid #ddd; */
+                border-radius: 5px;
+              }
+
+              :host([hidden]) {
+                display: none;
+              }
+
+              /* Basic styles for Markdown content */
+              h1,
+              h2,
+              h3,
+              h4,
+              h5,
+              h6 {
+                margin-top: 1em;
+                margin-bottom: 0.5em;
+              }
+
+              p {
+                margin-bottom: 1em;
+              }
+
+              code {
+                background-color: #252740;
+                /* border: 1px solid #5f5f5f; */
+                color: white;
+                border-radius: 3px;
+                padding: 0.2em 0.4em;
+                font-size: 85%;
+              }
+
+              pre {
+                background-color: #252740;
+                padding: 1em;
+                border-radius: 5px;
+                overflow: auto;
+              }
+            </style>
+            <link rel="stylesheet" th:href="@{/css/blog.css}" />
+          </template>
+        </zero-md>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>

@@ -23,12 +23,10 @@ public class CodeGenerator {
         this.userService = userService;
         this.blogService = blogService;
     }
-
     public CodeGenerator() {
         this.userService = null;
         this.blogService = null;
     }
-
     private String generateCode(String prefix) {
         Set<String> existingCodes = new HashSet<>();
         if (userService != null) {

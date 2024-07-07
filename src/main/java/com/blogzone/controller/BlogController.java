@@ -69,10 +69,8 @@ public class BlogController {
             blogService.deleteBlogById(id);
             redirectAttributes.addFlashAttribute("message", "Blog with ID " + id + " deleted successfully");
         } else {
-            // Handle case where blog doesn't exist or user is not authorized to delete it
             redirectAttributes.addFlashAttribute("error", "Unable to delete blog with ID " + id);
         }
-
         return "redirect:/profile/" + username;
     }
 
