@@ -48,9 +48,7 @@ public class ProfileController {
             Principal principal) {
         User user = userService.findByUsername(username);
         if (user == null) {
-            System.out.println("null hai user");
             model.addAttribute("error", "User not found");
-            model.addAttribute("loading", false); // No longer loading
             return "profile";
         }
 
@@ -61,19 +59,23 @@ public class ProfileController {
                 model.addAttribute("current", true);
             }
         }
-        if (principal == null) {
+
+        if(principal == null){
             model.addAttribute("current", false);
         }
-
         List<Blog> blogs = blogService.findByUsername(username);
         int totalSavedBlogs = userService.getSavedBlogIds(username);
         int totalBlogs = blogs.size();
 
+        int followingSize = user.getFollowingIds() == null ? 0 : user.getFollowingIds().size();
+        int followersSize = user.getFollowersIds() == null ? 0 : user.getFollowersIds().size();
+
+        model.addAttribute("followingSize", followingSize);
+        model.addAttribute("followersSize", followersSize);
         model.addAttribute("totalSavedBlogs", totalSavedBlogs);
         model.addAttribute("totalBlogs", totalBlogs);
         model.addAttribute("blogs", blogs);
         model.addAttribute("user", user);
-        model.addAttribute("loading", true);
         return "profile";
     }
 
@@ -87,7 +89,7 @@ public class ProfileController {
             return "profile_edit";
         }
         model.addAttribute("error", "you havent login");
-        return "profile_edit";
+        return "auth/login-error";
     }
 
     @PostMapping("/edit")

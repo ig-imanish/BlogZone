@@ -4,18 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Page</title>
-
-    <!-- Load Zero-md and Highlight.js asynchronously -->
     <script
       type="module"
       async
       src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
     ></script>
     <link rel="stylesheet" th:href="@{/css/blog.css}" />
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css"
-    /> -->
   </head>
 
   <body>
@@ -95,10 +89,8 @@
                 position: relative;
                 contain: content;
                 max-width: 100%;
-                overflow-x: auto; /* Add horizontal scrollbar */
+                overflow-x: auto;
                 padding: 1em;
-                /* background-color: #f8f8f8; */
-                /* border: 1px solid #ddd; */
                 border-radius: 5px;
               }
 
@@ -106,7 +98,6 @@
                 display: none;
               }
 
-              /* Basic styles for Markdown content */
               h1,
               h2,
               h3,

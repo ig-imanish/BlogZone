@@ -11,6 +11,7 @@
   --bg-color-navbar: #333963;
   --bg-color: #282a46;
   --text-url-color: #3498db;
+  --bg-color-og: #252740;
 }
 
 body {
@@ -330,20 +331,20 @@ body {
 }
 
 .follow-btn {
-  background-color: var(--bg-color);
-  color: #c9c9c9;
+  background-color: var(--bg-color-og);
+  color: #e0e0e0;
   border: 1px solid var(--bg-color-navbar);
 }
 
 .message-btn {
-  background-color: var(--bg-color-article);
-  color: #c9c9c9;
+  background-color: var(--bg-color-og);
+  color: #eeeeee;
 }
 
 .setting-btn {
   background-color: transparent;
   margin-right: -10px;
-  color: #666;
+  color: #e9e8e8;
 }
 
 .follow-btn:hover,
@@ -427,32 +428,11 @@ body {
   background-color: var(--bg-color-navbar);
 }
 
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.loading-spinner {
-  border: 8px solid rgba(0, 0, 0, 0.3);
-  border-top: 8px solid var(--text-url-color);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-}
 .follow-btn.disabled,
 .message-btn.disabled,
 .setting-btn.disabled {
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .no-article {

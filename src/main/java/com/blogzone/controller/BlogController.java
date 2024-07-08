@@ -87,6 +87,9 @@ public class BlogController {
             @RequestParam("image") MultipartFile image,
             Principal principal, Model model) throws IOException {
 
+                    if(principal == null) {
+                        return "auth/login-error";
+                    }
         if (file != null && !file.isEmpty()) {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
                 content = reader.lines().collect(Collectors.joining("\n"));

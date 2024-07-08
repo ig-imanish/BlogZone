@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Required</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(#6a11cb, #2575fc);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        text-align: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 15px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        max-width: 400px;
+        width: 100%;
+      }
+      .mini-container {
+        width: 250px;
+        height: 60px;
+        margin-left: 10px;
+        background-color: #2575fc;
+        border-radius: 15px;
+        position: relative;
+        top: -40px; /* Adjust this value to overlap the mini-container with the main container */
+        left: 0;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        font-size: small;
+        padding-top: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
+      .mini-container h1 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+      .error-page {
+        padding-top: 0px; 
+      }
+      .error-page h1 {
+        font-size: 4em;
+        margin-bottom: 20px;
+      }
+      .error-page p {
+        font-size: 1.5em;
+        margin-bottom: 30px;
+      }
+      .error-page .btn {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        color: #2575fc;
+        background: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.3s, color 0.3s;
+      }
+      .error-page .btn:hover {
+        background: #2575fc;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="mini-container">
+        <h1>LOGIN REQUIRED</h1>
+      </div>
+      <div class="error-page">
+        <h1>Oops!</h1>
+        <p>You haven't logged in yet.</p>
+        <a href="@{/auth/login}" class="btn">Go to Login</a>
+      </div>
+    </div>
+  </body>
+</html>

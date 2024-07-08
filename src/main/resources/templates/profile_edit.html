@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" th:href="@{/css/profile_edit.css}" />
 
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/profile_edit.css"> -->
   </head>
   <body>
     <div class="container">
@@ -22,7 +23,6 @@
             th:object="${user}"
             method="post"
             enctype="multipart/form-data"
-            onsubmit="showLoadingSpinner()"
           >
             <div class="header">
               <!-- Banner Image -->
@@ -177,11 +177,6 @@ Bio</textarea
             reader.readAsDataURL(file);
           }
         });
-
-      function showLoadingSpinner() {
-        document.querySelector(".edit-form").classList.add("loading");
-        document.getElementById("loadingSpinner").style.display = "block";
-      }
     </script>
   </body>
 </html>
