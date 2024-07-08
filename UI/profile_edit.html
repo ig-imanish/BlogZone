@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="main-css/profile_edit.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-section">
+        <div class="header">
+          <img src="/icons/banner.jpg" alt="Banner" id="bannerImagePreview" />
+          <label for="bannerImageUpload" class="edit-banner-btn">
+            <i class="fa-solid fa-camera"></i>
+          </label>
+          <input
+            type="file"
+            id="bannerImageUpload"
+            accept="image/*"
+            style="display: none"
+          />
+        </div>
+        <div class="profile-image">
+          <img
+            src="icons/profile.jpg"
+            alt="Profile Image"
+            id="profileImagePreview"
+          />
+          <label for="profileImageUpload" class="edit-image-btn">
+            <i class="fa-solid fa-camera"></i>
+          </label>
+          <input
+            type="file"
+            id="profileImageUpload"
+            accept="image/*"
+            style="display: none"
+          />
+        </div>
+        <div class="edit-form">
+          <form>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" value="Kartik Khorwal" />
+            </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" value="@kartikk" />
+            </div>
+            <div class="form-group">
+              <label for="bio">Bio</label>
+              <textarea id="bio">
+Building Websites and Webapps with Seamless User Experience Across Devices.</textarea
+              >
+            </div>
+            <div class="form-group">
+              <label for="location">Location</label>
+              <input type="text" id="location" value="India" />
+            </div>
+            <div class="form-group">
+              <label for="website">Website</label>
+              <input type="url" id="website" value="https://google.com" />
+            </div>
+            <div class="btn-group">
+            <a href="setting.html" class="cancel-btn">Back</a>
+              <button type="submit" class="save-btn">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // JavaScript to handle image preview
+      document
+        .getElementById("profileImageUpload")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("profileImagePreview").src =
+                e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      document
+        .getElementById("bannerImageUpload")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("bannerImagePreview").src =
+                e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+    </script>
+  </body>
+</html>
