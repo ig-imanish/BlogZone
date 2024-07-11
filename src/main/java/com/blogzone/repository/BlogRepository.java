@@ -13,6 +13,6 @@ public interface BlogRepository extends MongoRepository<Blog, String>{
 
     List<Blog> findByAuthorId(String authorId);
     List<Blog> findByCategories(List<String> categories);
-    @SuppressWarnings("null")
+    @Override
     Optional<Blog> findById(String id);
 }

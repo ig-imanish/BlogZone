@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.profile-container {
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+.back-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.search-bar {
+    margin-left: 10px;
+    flex-grow: 1;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.profile-info {
+    text-align: center;
+    padding: 20px;
+}
+
+.profile-picture img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.profile-details {
+    margin-top: 10px;
+}
+
+.profile-details h1 {
+    margin: 10px 0 5px;
+    font-size: 24px;
+}
+
+.profile-details .company-type, 
+.profile-details .website,
+.profile-details .followers,
+.profile-details .description {
+    margin: 5px 0;
+    color: #666;
+}
+
+.profile-details .hashtags {
+    margin-top: 10px;
+}
+
+.profile-details .hashtags span {
+    display: inline-block;
+    background: #efefef;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 2px;
+    font-size: 12px;
+}
+
+.follow-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background: #f8f8f8;
+    border-top: 1px solid #ddd;
+}
+
+.tab {
+    flex-grow: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: white;
+    border-bottom: 2px solid #007bff;
+}
+
+.posts {
+    padding: 20px;
+}
+
+.post {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+}
+
+.post-header img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post-header p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.post-content {
+    margin-top: 10px;
+}
+
+.post-content p {
+    margin: 10px 0;
+}
+
+.post-content img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="header">
+            <div class="back-button">
+                <img src="/src/main/resources/static/icons/14268155.png" alt="Back">
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
+        <div class="profile-info">
+            <div class="profile-picture">
+                <img src="/src/main/resources/static/icons/14268155.png" alt="Profile Picture">
+            </div>
+            <div class="profile-details">
+                <h1>Apple</h1>
+                <p class="company-type">Social Network Company</p>
+                <p class="website">www.twitter.com</p>
+                <p class="followers">742 followers</p>
+                <p class="description">Twitter is an American microblogging and social networking service.</p>
+                <div class="hashtags">
+                    <span>#chat</span>
+                    <span>#message</span>
+                    <span>#hashtag</span>
+                    <span>#idea</span>
+                    <span>#cc</span>
+                </div>
+                <button class="follow-button">Follow</button>
+            </div>
+        </div>
+        <div class="tabs">
+            <button class="tab active">Activity</button>
+            <button class="tab">About</button>
+        </div>
+        <div class="posts">
+            <div class="post">
+                <div class="post-header">
+                    <img src="/src/main/resources/static/icons/14268155.png" alt="Twitter">
+                    <p>Twitter</p>
+                    <p>2 hours ago</p>
+                </div>
+                <div class="post-content">
+                    <p>Hello Everyone</p>
+                    <img src="/src/main/resources/static/icons/14268155.png" alt="Post Image">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

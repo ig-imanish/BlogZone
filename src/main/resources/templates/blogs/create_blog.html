@@ -1,161 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>New Blog Entry</title>
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
-    ></script>
-    <link rel="stylesheet" th:href="@{/css/auth.css}" />
-    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/auth.css" /> -->
-  </head>
-  <body>
-    <div class="container">
-      <div class="head">
-        <h2>Create New Blog Entry</h2>
-      </div>
-      <form
-        class="register-form"
-        th:action="@{/blogs/create}"
-        th:object="${blog}"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <div class="form-group">
-          <label>Title:</label><br />
-          <input
-            type="text"
-            th:field="*{title}"
-            placeholder="Enter the title"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label>Categories:</label><br />
-          <input
-            type="text"
-            th:field="*{categories}"
-            placeholder="Enter categories separated by commas"
-          />
-        </div>
-        <div class="form-group">
-          <label>Description:</label>
-          <textarea
-            id="description"
-            rows="5"
-            name="content"
-            placeholder="Enter description here..."
-          ></textarea>
-          <button type="button" id="preview-button">Preview!</button>
-        </div>
-        <div class="form-group">
-          <div class="input-group custom-file-button">
-            <label>.md File :</label>
-            <input
-              id="mdFile"
-              class="form-control"
-              type="file"
-              name="file"
-              accept=".md"
-            />
-            <button
-              type="button"
-              style="border-radius: 4px; border: none"
-              onclick="clearMdFile()"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="input-group custom-file-button">
-            <label>Blog Thumbnail:</label>
-            <input
-              class="form-control"
-              type="file"
-              name="image"
-              accept=".jpg, .png, .jpeg"
-            />
-            <small>It will show on the home page!</small>
-          </div>
-        </div>
-        <input class="submit-btn" type="submit" value="Create Blog" />
-      </form>
-      <p><a th:href="@{/profile}">Go to profile</a></p>
 
-      <div class="error" th:if="${error}">
-        <div class="alert alert-danger">
-          <span th:text="${error}"></span
-          ><i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-      </div>
-      <div class="error" th:if="${message}">
-        <div class="alert alert-success">
-          <span th:text="${message}"></span
-          > <a th:href="'/blogs/' + ${blogId}" th:text="${blogId}"></a><i class="fa-regular fa-circle-check"></i>
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>New Blog Entry</title>
+  <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+  <link rel="stylesheet" th:href="@{/css/create_blog.css}" />
+  <!-- <link rel="stylesheet" href="/src/main/resources/static/css/create_blog.css" /> -->
+</head>
 
-      <div class="card-overlay" id="card-overlay"></div>
-      <div class="card" id="markdown-card">
-        <button class="close-btn" onclick="closePreview()">✖</button>
-        <div class="register-form">
-          <zero-md id="markdown-preview">
-            <script type="text/markdown" id="markdown-content"></script>
-          </zero-md>
+<body>
+  <div class="container">
+    <div class="head">
+      <h2>Create New Blog Entry</h2>
+    </div>
+    <form class="register-form" th:action="@{/blogs/create}" th:object="${blog}" method="post"
+      enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Title:</label><br />
+        <input type="text" th:field="*{title}" placeholder="Enter the title" required />
+      </div>
+      <div class="form-group">
+        <label>Categories:</label><br />
+        <input type="text" th:field="*{categories}" placeholder="Enter categories separated by commas" />
+      </div>
+      <div class="form-group">
+        <label>Description:</label>
+        <textarea id="description" rows="5" name="content" placeholder="Enter description here..."></textarea>
+        <button type="button" id="preview-button">Preview!</button>
+      </div>
+      <div class="form-group">
+        <div class="input-group custom-file-button">
+          <label>.md File :</label>
+          <input id="mdFile" class="form-control" type="file" name="file" accept=".md" />
+          <button type="button" style="border-radius: 4px; border: none" onclick="clearMdFile()">
+            Cancel
+          </button>
         </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group custom-file-button">
+          <label>Blog Thumbnail:</label>
+          <input class="form-control" type="file" name="image" accept=".jpg, .png, .jpeg" />
+          <small>It will show on the home page!</small>
+        </div>
+      </div>
+      <input class="submit-btn" type="submit" value="Create Blog" />
+    </form>
+    <p><a th:href="@{/profile}">Go to profile</a></p>
+
+    <div class="error" th:if="${error}">
+      <div class="alert alert-danger">
+        <span th:text="${error}"></span><i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+    </div>
+    <div class="error" th:if="${message}">
+      <div class="alert alert-success">
+        <span th:text="${message}"></span> <a th:href="'/blogs/' + ${blogId}" th:text="${blogId}"></a><i
+          class="fa-regular fa-circle-check"></i>
       </div>
     </div>
 
-    <script>
-      function showPreview() {
-        const markdownContent = document.getElementById("description").value;
-        const scriptTag = document.getElementById("markdown-content");
-        scriptTag.textContent = markdownContent;
-        // Dispatch an event to let zero-md know that the script content has changed
-        scriptTag.dispatchEvent(new Event("content-changed"));
-        // Show the card and overlay
-        document.getElementById("card-overlay").style.display = "block";
-        document.getElementById("markdown-card").style.display = "block";
-      }
+    <div class="card-overlay" id="card-overlay"></div>
+    <div class="card" id="markdown-card">
+      <button class="close-btn" onclick="closePreview()">✖</button>
+      <div class="register-form">
+        <zero-md id="markdown-preview">
+          <script type="text/markdown" id="markdown-content"></script>
+        </zero-md>
+      </div>
+    </div>
+  </div>
 
-      function closePreview() {
-        document.getElementById("card-overlay").style.display = "none";
-        document.getElementById("markdown-card").style.display = "none";
-      }
+  <script>
+    function showPreview() {
+      const markdownContent = document.getElementById("description").value;
+      const scriptTag = document.getElementById("markdown-content");
+      scriptTag.textContent = markdownContent;
+      // Dispatch an event to let zero-md know that the script content has changed
+      scriptTag.dispatchEvent(new Event("content-changed"));
+      // Show the card and overlay
+      document.getElementById("card-overlay").style.display = "block";
+      document.getElementById("markdown-card").style.display = "block";
+    }
 
-      // Add event listener to the button
-      document
-        .getElementById("preview-button")
-        .addEventListener("click", showPreview);
+    function closePreview() {
+      document.getElementById("card-overlay").style.display = "none";
+      document.getElementById("markdown-card").style.display = "none";
+    }
 
-      function clearMdFile() {
+    document
+      .getElementById("preview-button")
+      .addEventListener("click", showPreview);
+
+    function clearMdFile() {
+      var mdFileInput = document.querySelector("#mdFile");
+      mdFileInput.value = "";
+    }
+
+    document
+      .querySelector("form")
+      .addEventListener("submit", function (event) {
+        var textarea = document.querySelector("#description");
         var mdFileInput = document.querySelector("#mdFile");
-        mdFileInput.value = "";
-      }
+        var descriptionFilled = textarea.value.trim() !== "";
+        var mdFileFilled = mdFileInput.files.length > 0;
 
-      document
-        .querySelector("form")
-        .addEventListener("submit", function (event) {
-          var textarea = document.querySelector("#description");
-          var mdFileInput = document.querySelector("#mdFile");
-          var descriptionFilled = textarea.value.trim() !== "";
-          var mdFileFilled = mdFileInput.files.length > 0;
+        if (!descriptionFilled && !mdFileFilled) {
+          alert("Please provide either a description or a markdown file.");
+          event.preventDefault();
+          return;
+        }
+        if (descriptionFilled && mdFileFilled) {
+          alert(
+            "Please provide either a description or a markdown file, not both."
+          );
+          event.preventDefault();
+          return;
+        }
+      });
+  </script>
+</body>
 
-          if (!descriptionFilled && !mdFileFilled) {
-            alert("Please provide either a description or a markdown file.");
-            event.preventDefault();
-            return;
-          }
-          if (descriptionFilled && mdFileFilled) {
-            alert(
-              "Please provide either a description or a markdown file, not both."
-            );
-            event.preventDefault();
-            return;
-          }
-        });
-    </script>
-  </body>
 </html>

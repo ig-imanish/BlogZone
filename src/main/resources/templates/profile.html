@@ -2,247 +2,249 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile Page</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link rel="stylesheet" th:href="@{/css/global.css}" />
-  <!-- <link rel="stylesheet" href="/src/main/resources/static/css/global.css" /> -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="/src/main/resources/static/css/global.css"> -->
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
 </head>
 
 <body>
-  <div class="container" th:if="${user != null}">
-    <div class="profile-section">
-      <div class="header">
-        <img th:if="${user.userBanner != null}" th:src="'data:image/jpeg;base64,' + ${user.userBannerBase64}"
-          alt="Banner" />
-        <img th:unless="${user.userBanner != null}" th:src="@{/img/banner.jpg}" alt="Banner!" />
-      </div>
-      <div class="profile-image">
-        <img th:if="${user.userAvatar != null}" th:src="'data:image/jpeg;base64,' + ${user.userAvatarBase64}"
-          alt="Profile Image" />
-        <img th:unless="${user.userAvatar != null}" th:src="@{/img/profile.png}" alt="Profile Image!" />
-      </div>
-      <div class="info">
-        <div class="info_main">
-          <div class="info_head">
-            <h2 th:if="${user.fullName}" th:text="${user.fullName}">
-              Full Name
-            </h2>
-            <p th:if="${user.username}" th:text="${user.username}">
-              @username
-            </p>
-          </div>
-          <div class="top-btns">
-            <a th:href="@{'/user/follow?username=' + ${user.username}}" class="follow-btn"
-              th:if="${!current}">Follow</a>
-
-            <a href="/profile/edit" class="setting-btn" th:if="${current}">
-              Edit Profile
-            </a>
-
-            <a href="#" class="message-btn" th:classappend="${current ? 'disabled' : ''}" th:if="${current}">
-              Message
-            </a>
-            <a href="#" class="message-btn" th:classappend="${!current ? 'disabled' : ''}" th:if="${!current}">
-              Setting  <i class="fa-solid fa-gear"></i>
-            </a>
-
-            
-            </a>
-
-            <!-- <a href="#" class="follow-btn">Following</a>
-              <a href="#" class="message-btn">Message</a>
-              <a href="/profile/edit" class="setting-btn"
-                ><i class="fa-solid fa-gear"></i
-              ></a> -->
-          </div>
-        </div>
-        <p th:if="${user.bio}" th:text="${user.bio}">User Bio</p>
-      </div>
-      <div class="footer">
-        <div class="icons">
-          <div class="icon-text" th:if="${user.url}">
-            <i class="fa-solid fa-link"></i>
-            <a th:href="${user.url}">
-              <span th:text="${user.url}">URL</span>
-            </a>
-          </div>
-          <div class="icon-text" th:if="${user.country}">
-            <i class="fa-solid fa-location-dot"></i>
-            <p th:text="${user.country}">Country</p>
-          </div>
-        </div>
-      </div>
-      <div class="stats">
-        <div>
-          <h3 th:text="${totalBlogs != null ? totalBlogs : '0'}">0</h3>
-          <p>Blogs</p>
-        </div>
-        <div>
-          <h3 th:text="${followingSize != null ? followingSize : '0'}">0</h3>
-          <p>Following</p>
-        </div>
-        <div>
-          <h3 th:text="${followingSize != null ? followersSize : '0'}">0</h3>
-          <p>Followers</p>
-        </div>
-      </div>
-    </div>
-    <div class="articles">
-      <article class="articles">
-        <!-- Check if blogs list is empty -->
-
-        <div th:if="${blogs.empty}" class="no-article">
-          <img th:src="@{/icons/green-img.png}" src="/src/main/resources/static/icons/green-img.png" alt="default" />
-          <div>
-            <h3>Share Blogs</h3>
-            <p>When you share blogs, they will appear on your profile.</p>
-            <a href="/blogs/create" class="create-blog-btn-profile">Share your first photo</a>
-          </div>
-        </div>
-
-        <div th:each="blog : ${blogs}" class="article">
-          <img th:if="${blog.imageBase64}" th:src="'data:image/jpeg;base64,' + ${blog.imageBase64}" alt="Blog Image" />
-          <img th:unless="${blog.imageBase64}" th:src="@{/img/background.jpg}" alt="Blog Image" />
-          <div class="article-content">
-            <span class="source" th:text="${blog.authorId}"></span>
-            <h3 class="title">
-              <a th:href="@{'/blogs/' + ${blog.id}}" th:text="${blog.title}">Blog Title</a>
-            </h3>
-            <span class="date" th:text="${blog.dateString}"></span>
-
-            <button class="toggle-actions">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-            <div class="article-actions">
-              <button title="Share">
-                <a th:href="@{'/blogs/' + ${blog.id}}"><i class="fa-solid fa-share"></i></a>
-              </button>
-              <button title="Delete">
-                <a th:href="@{'/blogs/delete/' + ${blog.id}}">
-                  <i class="fa-solid fa-trash"></i>
-                </a>
-              </button>
-              <button title="Edit">
-                <a th:href="@{'/blogs/edit/' + ${blog.id}}">
-                  <i class="fa-solid fa-edit"></i></a>
-              </button>
-
-              <button class="close-actions" style="display: none">
-                <i class="fa-solid fa-times"></i>
-              </button>
+    <div class="container" th:if="${user != null}">
+        <div class="profile-section">
+            <div class="header">
+                <img th:if="${user.userBanner != null}" th:src="'data:image/jpeg;base64,' + ${user.userBannerBase64}"
+                    alt="Banner" />
+                <img th:unless="${user.userBanner != null}" th:src="@{/img/banner.jpg}" alt="Banner!" />
             </div>
-          </div>
+            <div class="profile-image">
+                <img th:if="${user.userAvatar != null}" th:src="'data:image/jpeg;base64,' + ${user.userAvatarBase64}"
+                    alt="Profile Image" />
+                <img th:unless="${user.userAvatar != null}" th:src="@{/img/profile.png}" alt="Profile Image!" />
+            </div>
+            <div class="info">
+                <div class="info_main">
+                    <div class="info_head">
+                        <h2 th:if="${user.fullName}" th:text="${user.fullName}">Full Name</h2>
+                        <p th:if="${user.username}" th:text="${user.username}">@username</p>
+                    </div>
+                    <div class="top-btns">
+                        <a th:href="@{'/user/follow?username=' + ${user.username}}" class="follow-btn"
+                            th:if="${showFollow}">Follow</a>
+                        <a th:href="@{'/user/unfollow?username=' + ${user.username}}" class="follow-btn"
+                            th:if="${showUnfollow}">Unfollow</a>
+                        <a href="/profile/edit" class="setting-btn" th:if="${current}">Edit Profile</a>
+                        <a href="#" class="message-btn" th:classappend="${current ? 'disabled' : ''}"
+                            th:if="${!current}">Message</a>
+                        <a href="/setting_page" class="setting-btn"
+                            th:if="${current}"><i class="fa-solid fa-gear"></i></a>
+                    </div>
+                </div>
+                <p th:if="${user.bio}" th:text="${user.bio}">User Bio</p>
+            </div>
+            <div class="footer">
+                <div class="icons">
+                    <div class="icon-text" th:if="${user.country}">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p th:text="${user.country}">Country</p>
+                    </div>
+                    <div class="icon-text" th:if="${user.url}">
+                        <i class="fa-solid fa-link"></i>
+                        <a th:href="${user.url}">
+                            <span th:text="${user.url}">URL</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
         </div>
-      </article>
-      <!-- Check if there is a success message -->
-      <div class="message-card success" th:if="${message}">
-        <span th:text="${message}"></span>
-        <button class="close-actions">
-          <i class="fa-solid fa-times"></i>
-        </button>
-      </div>
-      <div class="message-card error" th:if="${error}">
-        <span th:text="${message}"></span>
-        <button class="close-actions">
-          <i class="fa-solid fa-times"></i>
-        </button>
-      </div>
+        <div class="stats">
+            <div class="followers-following">
+                <h3 th:text="${totalBlogs != null ? totalBlogs : '0'}">0</h3>
+                <!-- <p>Blogs</p> -->
+                <button disabled>Blogs</button>
+            </div>
+            <div class="followers-following">
+                <h3 th:text="${followingSize != null ? followingSize : '0'}">0</h3>
+                <!-- <p>Following</p> -->
+                <button id="followingBtn">Following</button>
+            </div>
+            <div class="followers-following">
+                <h3 th:text="${followersSize != null ? followersSize : '0'}">0</h3>
+                <!-- <p>Followers</p> -->
+                <button id="followersBtn">Followers</button>
+            </div>
+        </div>
+
+        <!-- Followers Modal -->
+        <div id="followersModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeFollowers">&times;</span>
+                <h3>Followers</h3>
+                <div class="followers">
+
+                    <!-- Check if followers list is empty -->
+                    <div th:if="${followersSize == 0 }">
+
+                        <p style="color: rgb(187, 187, 187);">No followers yet.</p>
+                    </div>
+
+                    <ul>
+                        <li th:each="follower : ${user.followersIds}">
+                            <a th:href="@{'/profile/' + ${follower}}"><span th:text="${follower}"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Following Modal -->
+        <div id="followingModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeFollowing">&times;</span>
+                <h3>Following</h3>
+                <div class="following">
+
+                    <!-- Check if followers list is empty -->
+                    <div th:if="${followingSize == 0 }">
+
+                        <p style="color: rgb(187, 187, 187);">No following yet.</p>
+                    </div>
+
+
+                    <ul>
+                        <li th:each="following : ${user.followingIds}">
+                            <a th:href="@{'/profile/' + ${following}}"><span th:text="${following}"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="articles">
+            <article class="articles">
+                <!-- Check if blogs list is empty -->
+
+                <div th:if="${blogs.empty}" class="no-article">
+                    <img th:src="@{/icons/green-img.png}" src="/src/main/resources/static/icons/green-img.png"
+                        alt="default" />
+                    <div>
+                        <h3>Share Blogs</h3>
+                        <p>When you share blogs, they will appear on your profile.</p>
+                        <a href="/blogs/create" class="create-blog-btn-profile">Share your first photo</a>
+                    </div>
+                </div>
+
+                <div th:each="blog : ${blogs}" class="article">
+                    <img th:if="${blog.imageBase64}" th:src="'data:image/jpeg;base64,' + ${blog.imageBase64}"
+                        alt="Blog Image" />
+                    <img th:unless="${blog.imageBase64}" th:src="@{/img/background.jpg}" alt="Blog Image" />
+                    <div class="article-content">
+                        <span class="source" th:text="${blog.authorId}"></span>
+                        <h3 class="title">
+                            <a th:href="@{'/blogs/' + ${blog.id}}" th:text="${blog.title}">Blog Title</a>
+                        </h3>
+                        <span class="date" th:text="${blog.dateString}"></span>
+
+                        <button class="toggle-actions">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <div class="article-actions">
+                            <button title="Share">
+                                <a th:href="@{'/blogs/' + ${blog.id}}"><i class="fa-solid fa-share"></i></a>
+                            </button>
+                            <button title="Delete">
+                                <a th:href="@{'/blogs/delete/' + ${blog.id}}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </button>
+                            <button title="Edit">
+                                <a th:href="@{'/blogs/edit/' + ${blog.id}}">
+                                    <i class="fa-solid fa-edit"></i></a>
+                            </button>
+
+                            <button class="close-actions" style="display: none">
+                                <i class="fa-solid fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- Check if there is a success message -->
+            <div class="message-card success" th:if="${message}">
+                <span th:text="${message}"></span>
+                <button class="close-actions">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <div class="message-card error" th:if="${error}">
+                <span th:text="${message}"></span>
+                <button class="close-actions">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="container" th:if="${error}">
-    <div class="header">
-      <h2 style="color: rgb(172, 31, 31)" th:text="${error}">
-        User Not Found!
-      </h2>
+    <div class="container" th:if="${error}">
+        <div class="header">
+            <h2 style="color: rgb(172, 31, 31)" th:text="${error}">
+                User Not Found!
+            </h2>
+        </div>
     </div>
-  </div>
-  <div class="bottom-nav-container">
-    <nav class="bottom-nav">
-      <button class="nav-item">
-        <a href="/home"><i class="fa-regular fa-paper-plane"></i></a>
-      </button>
-      <button class="nav-item">
-        <a href="/blogs/create"><i class="fa-solid fa-plus create-blog-btn"></i></a>
-      </button>
-      <button class="nav-item">
-        <a href="/blogs/saved"><i class="fa-regular fa-bookmark"></i></a>
-      </button>
-      <button class="nav-item" th:if="${user != null}">
-        <a th:href="@{/profile/{username}(username=${currUsername})}"><i class="fa-regular fa-user"></i></a>
-      </button>
-      <button class="nav-item" th:unless="${user != null}">
-        <a href="/auth/login"><i class="fa-regular fa-user"></i></a>
-      </button>
-    </nav>
-  </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const closeButtons = document.querySelectorAll(".close-actions");
+    <div class="bottom-nav-container">
+        <nav class="bottom-nav">
+            <button class="nav-item">
+                <a href="/home"><i class="fa-regular fa-paper-plane"></i></a>
+            </button>
+            <button class="nav-item">
+                <a href="/blogs/create"><i class="fa-solid fa-plus create-blog-btn"></i></a>
+            </button>
+            <button class="nav-item">
+                <a href="/blogs/saved"><i class="fa-regular fa-bookmark"></i></a>
+            </button>
+            <button class="nav-item" th:if="${user != null}">
+                <a th:href="@{/profile/{username}(username=${currUsername})}"><i class="fa-regular fa-user"></i></a>
+            </button>
+            <button class="nav-item" th:unless="${user != null}">
+                <a href="/auth/login"><i class="fa-regular fa-user"></i></a>
+            </button>
+        </nav>
+    </div>
 
-      closeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          button.parentElement.style.display = "none";
+    <script>
+        document.getElementById("followersBtn").addEventListener("click", function () {
+            var modal = document.getElementById("followersModal");
+            modal.style.display = "block";
         });
-      });
-    });
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggleActions = document.querySelectorAll(".toggle-actions");
-
-      toggleActions.forEach((toggle) => {
-        toggle.addEventListener("click", () => {
-          const articleActions =
-            toggle.parentElement.querySelector(".article-actions");
-          const closeActionsBtn =
-            articleActions.querySelector(".close-actions");
-
-          if (articleActions.classList.contains("show")) {
-            articleActions.classList.remove("show");
-            closeActionsBtn.style.display = "none";
-          } else {
-            document
-              .querySelectorAll(".article-actions")
-              .forEach((actions) => {
-                actions.classList.remove("show");
-                actions.querySelector(".close-actions").style.display =
-                  "none";
-              });
-            articleActions.classList.add("show");
-            closeActionsBtn.style.display = "block";
-          }
+        document.getElementById("followingBtn").addEventListener("click", function () {
+            var modal = document.getElementById("followingModal");
+            modal.style.display = "block";
         });
-      });
 
-      document.addEventListener("click", function (event) {
-        const articleActions = document.querySelectorAll(".article-actions");
-        const toggleActions = document.querySelectorAll(".toggle-actions");
-
-        if (
-          !event.target.closest(".article-actions") &&
-          !event.target.closest(".toggle-actions")
-        ) {
-          articleActions.forEach((actions) => {
-            actions.classList.remove("show");
-            actions.querySelector(".close-actions").style.display = "none";
-          });
-        }
-      });
-
-      document.querySelectorAll(".close-actions").forEach((closeBtn) => {
-        closeBtn.addEventListener("click", (event) => {
-          const articleActions = closeBtn.parentElement;
-          articleActions.classList.remove("show");
-          closeBtn.style.display = "none";
+        document.getElementById("closeFollowers").addEventListener("click", function () {
+            var modal = document.getElementById("followersModal");
+            modal.style.display = "none";
         });
-      });
-    });
 
-    function hideMessageCard(button) {
-      button.parentElement.style.display = "none";
-    }
-  </script>
+        document.getElementById("closeFollowing").addEventListener("click", function () {
+            var modal = document.getElementById("followingModal");
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            var followersModal = document.getElementById("followersModal");
+            var followingModal = document.getElementById("followingModal");
+            if (event.target == followersModal) {
+                followersModal.style.display = "none";
+            }
+            if (event.target == followingModal) {
+                followingModal.style.display = "none";
+            }
+        });
+    </script>
 </body>
 
 </html>

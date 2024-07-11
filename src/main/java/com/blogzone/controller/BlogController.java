@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.blogzone.entity.Blog;
+import com.blogzone.entity.User;
 import com.blogzone.helpers.CodeGenerator;
 import com.blogzone.service.BlogService;
 import com.blogzone.service.UserService;
@@ -43,14 +44,24 @@ public class BlogController {
     }
 
     @GetMapping("/{id}")
-    public String getBlog(@PathVariable String id, Model model) {
+    public String getBlog(@PathVariable String id, Model model, Principal principal) {
         Blog blog = blogService.findBlogById(id);
-        if(blog == null) {
+        if (blog == null) {
             model.addAttribute("error", "Blog not found");
             return "blogs/show";
         }
         String avatar = userService.findByUsername(blog.getAuthorId()).getUserAvatarBase64();
+        User blogAuthor = userService.findByUsername(blog.getAuthorId());
+
         System.out.println(blog);
+        if (principal.getName() == null ? blog.getAuthorId() != null
+                : !principal.getName().equals(blog.getAuthorId())
+                       || blogAuthor.getFollowersIds() != null && !blogAuthor.getFollowersIds().contains(principal.getName())) {
+
+            model.addAttribute("showFollow", true);
+        } else {
+            model.addAttribute("showFollow", false);
+        }
         model.addAttribute("blog", blog);
         model.addAttribute("avatar", avatar);
         return "blogs/show";
@@ -87,14 +98,13 @@ public class BlogController {
             @RequestParam("image") MultipartFile image,
             Principal principal, Model model) throws IOException {
 
-                    if(principal == null) {
-                        return "auth/login-error";
-                    }
+        if (principal == null) {
+            return "auth/login-error";
+        }
         if (file != null && !file.isEmpty()) {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
                 content = reader.lines().collect(Collectors.joining("\n"));
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
         blog.setContent(content);
@@ -104,13 +114,13 @@ public class BlogController {
             String stringDate = dateFormat.format(currentDate);
 
             blog.setDateString(stringDate);
-            if (principal != null) {
-                blog.setAuthorId(principal.getName());
-            }
+
+            blog.setAuthorId(principal.getName());
+
             Binary images = new Binary(image.getBytes());
             blog.setProductImage(images);
-            blog.setImageBase64(Base64.getEncoder().encodeToString(image.getBytes()));
-        } catch (Exception e) {
+            blog.setImageBase64(Base64.getEncoder().encodeToString(images.getData()));
+        } catch (IOException e) {
             System.out.println(e);
             model.addAttribute("error", "Error while uploading image");
             return "blogs/create_blog";

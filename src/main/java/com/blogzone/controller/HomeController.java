@@ -52,6 +52,13 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @GetMapping("/setting_page")
+    public String setting_page(Model model, Principal principal) {
+        addUserInfoToModel(model, principal);
+        return "setting_page";
+    }
+    
+
     private void addUserInfoToModel(Model model, Principal principal) {
         if (principal != null) {
             String username = principal.getName();

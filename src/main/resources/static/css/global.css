@@ -17,7 +17,8 @@
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  background-color: #252740;
+  /* background-color: #252740; */
+  background: var(--bg-color);
   margin: 0;
   padding: 0;
   display: flex;
@@ -97,6 +98,7 @@ body {
   background-color: #ddd;
 }
 .articles {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -335,21 +337,43 @@ body {
   color: #e0e0e0;
   border: 1px solid var(--bg-color-navbar);
 }
+.follow-btn a{
+  text-decoration: none;
+  color: white;
+}
 
 .message-btn {
   background-color: var(--bg-color-og);
-  color: #eeeeee;
+  color: #e0e0e0;
+  border: 1px solid var(--bg-color-navbar);
+  /* background-color: var(--bg-color-og);
+  color: #eeeeee; */
+}
+.message-btn a{
+  text-decoration: none;
+  color: white;
+}
+
+.setting-btn i {
+  margin-left: 4px;
 }
 
 .setting-btn {
-  background-color: transparent;
-  margin-right: -10px;
-  color: #e9e8e8;
+  background-color: var(--bg-color-og);
+  color: #e0e0e0;
+  border: 1px solid var(--bg-color-navbar);
 }
+
+.setting-btn a{
+  text-decoration: none;
+  color: white;
+}
+
 
 .follow-btn:hover,
 .message-btn:hover,
 .setting-btn:hover {
+  cursor: pointer;
   opacity: 0.8;
 }
 
@@ -431,12 +455,13 @@ body {
 .follow-btn.disabled,
 .message-btn.disabled,
 .setting-btn.disabled {
-  pointer-events: none;
+  cursor: not-allowed;
   opacity: 0.7;
 }
 
 .no-article {
   background-color: var(--bg-color-article);
+  margin-top: 20px;
   padding: 20px;
   border-radius: 10px;
   display: flex;
@@ -514,6 +539,86 @@ body {
 .articles .show-more-btn:hover {
   background-color: var(--bg-color-navbar);
 }
+
+.followers-following {
+  text-align: center;
+
+}
+
+.followers-following button {
+  border-radius: 5px;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #c9c9c9;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(43, 40, 40, 0.4);
+}
+
+.modal-content {
+  background-color: #252740;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 360px;
+  border-radius: 10px;
+}
+
+.modal-content h3 {
+  color: #2196F3;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.followers ul,
+.following ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.followers ul li,
+.following ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.followers ul li a,
+.following ul li a {
+  text-decoration: none;
+  color: #c7c7c7;
+}
+
+.followers ul li a:hover,
+.following ul li a:hover {
+  color: #2196F3;
+  text-decoration: underline;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

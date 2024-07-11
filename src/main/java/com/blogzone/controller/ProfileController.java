@@ -43,30 +43,27 @@ public class ProfileController {
         return "home";
     }
 
-    @GetMapping("/{username}")
-    public String profileById(@PathVariable String username, HttpServletRequest request, Model model,
+    @GetMapping("/test/{username}")
+    public String testprofileById(@PathVariable String username, HttpServletRequest request, Model model,
             Principal principal) {
         User user = userService.findByUsername(username);
         if (user == null) {
             model.addAttribute("error", "User not found");
-            return "profile";
+            return "test";
         }
 
-        if (principal != null) {
-            String currentUsername = principal.getName();
-            model.addAttribute("currUsername", currentUsername);
-            if (currentUsername.equals(username)) {
-                model.addAttribute("current", true);
-            }
-        }
+        boolean isCurrentUser = principal != null && principal.getName().equals(username);
+        boolean isFollowing = principal != null && user.getFollowersIds() != null
+                && user.getFollowersIds().contains(principal.getName());
 
-        if(principal == null){
-            model.addAttribute("current", false);
-        }
+        model.addAttribute("currUsername", principal != null ? principal.getName() : null);
+        model.addAttribute("current", isCurrentUser);
+        model.addAttribute("showFollow", !isCurrentUser && !isFollowing);
+        model.addAttribute("showUnfollow", !isCurrentUser && isFollowing);
+
         List<Blog> blogs = blogService.findByUsername(username);
         int totalSavedBlogs = userService.getSavedBlogIds(username);
         int totalBlogs = blogs.size();
-
         int followingSize = user.getFollowingIds() == null ? 0 : user.getFollowingIds().size();
         int followersSize = user.getFollowersIds() == null ? 0 : user.getFollowersIds().size();
 
@@ -76,8 +73,87 @@ public class ProfileController {
         model.addAttribute("totalBlogs", totalBlogs);
         model.addAttribute("blogs", blogs);
         model.addAttribute("user", user);
+
+        return "test";
+    }
+
+    @GetMapping("/{username}")
+    public String profileById(@PathVariable String username, HttpServletRequest request, Model model,
+            Principal principal) {
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            model.addAttribute("error", "User not found");
+            return "profile";
+        }
+
+        boolean isCurrentUser = principal != null && principal.getName().equals(username);
+        boolean isFollowing = principal != null && user.getFollowersIds() != null
+                && user.getFollowersIds().contains(principal.getName());
+
+        model.addAttribute("currUsername", principal != null ? principal.getName() : null);
+        model.addAttribute("current", isCurrentUser);
+        model.addAttribute("showFollow", !isCurrentUser && !isFollowing);
+        model.addAttribute("showUnfollow", !isCurrentUser && isFollowing);
+
+        List<Blog> blogs = blogService.findByUsername(username);
+        int totalSavedBlogs = userService.getSavedBlogIds(username);
+        int totalBlogs = blogs.size();
+        int followingSize = user.getFollowingIds() == null ? 0 : user.getFollowingIds().size();
+        int followersSize = user.getFollowersIds() == null ? 0 : user.getFollowersIds().size();
+
+        model.addAttribute("followingSize", followingSize);
+        model.addAttribute("followersSize", followersSize);
+        model.addAttribute("totalSavedBlogs", totalSavedBlogs);
+        model.addAttribute("totalBlogs", totalBlogs);
+        model.addAttribute("blogs", blogs);
+        model.addAttribute("user", user);
+
         return "profile";
     }
+
+    // @GetMapping("/{username}")
+    // public String profileById(@PathVariable String username, HttpServletRequest
+    // request, Model model,
+    // Principal principal) {
+    // User user = userService.findByUsername(username);
+    // if (user == null) {
+    // model.addAttribute("error", "User not found");
+    // return "profile";
+    // }
+
+    // if (principal != null) {
+    // String currentUsername = principal.getName();
+    // model.addAttribute("currUsername", currentUsername);
+    // if (currentUsername.equals(username)) {
+    // model.addAttribute("current", true);
+    // }
+    // }
+
+    // if (principal == null) {
+    // model.addAttribute("current", false);
+    // }
+    // if (user.getFollowersIds().contains(principal.getName())) {
+    // model.addAttribute("showFollow", false);
+    // } else {
+    // model.addAttribute("current", false);
+    // }
+    // List<Blog> blogs = blogService.findByUsername(username);
+    // int totalSavedBlogs = userService.getSavedBlogIds(username);
+    // int totalBlogs = blogs.size();
+
+    // int followingSize = user.getFollowingIds() == null ? 0 :
+    // user.getFollowingIds().size();
+    // int followersSize = user.getFollowersIds() == null ? 0 :
+    // user.getFollowersIds().size();
+
+    // model.addAttribute("followingSize", followingSize);
+    // model.addAttribute("followersSize", followersSize);
+    // model.addAttribute("totalSavedBlogs", totalSavedBlogs);
+    // model.addAttribute("totalBlogs", totalBlogs);
+    // model.addAttribute("blogs", blogs);
+    // model.addAttribute("user", user);
+    // return "profile";
+    // }
 
     @GetMapping("/edit")
     public String editPage(Model model, Principal principal) {

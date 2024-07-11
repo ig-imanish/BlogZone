@@ -50,7 +50,6 @@ public class AuthController {
         return "auth/register";
     }
 
-    @SuppressWarnings("null")
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
             BindingResult result,
